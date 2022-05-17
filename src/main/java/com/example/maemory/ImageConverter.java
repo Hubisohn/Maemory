@@ -1,7 +1,9 @@
-package com.example.maemory;
+package com.example.spielkartensystem;
 
 import javafx.scene.image.*;
 import javafx.stage.*;
+import org.jetbrains.annotations.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.*;
@@ -26,7 +28,11 @@ public class ImageConverter {
 		
 	}
 	
-	public static ArrayList<Spielkarte> convertWithoutDialog (int width, int height, File... files) throws Exception {
+	public static ArrayList<Spielkarte> convertWithoutDialog (@NotNull Integer width,@NotNull Integer height, @NotNull File... files) throws Exception {
+		
+		if (width <= 0 || height <= 0) {
+			throw new IllegalArgumentException("width and height must be greater than 0");
+		}
 		
 		ArrayList<Spielkarte> spielkartes = new ArrayList<>();
 		ArrayList<Image> images = new ArrayList<>();
@@ -39,7 +45,7 @@ public class ImageConverter {
 				
 				try {
 					
-					if (!f.getName().contains("background")) {
+					if (!f.getName().contains("background") && background[0] != null) {
 						
 						images.add(new Image(f.getPath(),width,height,false,false)/*new Image(new FileInputStream(f))*/);
 						
