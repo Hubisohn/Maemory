@@ -38,14 +38,23 @@ public class ImageConverter {
 		ArrayList<Image> images = new ArrayList<>();
 		final Image[] background = {null};
 		final Exception[] ex = {null};
+		boolean valid = false;
 		
-		if (Stream.of(Objects.requireNonNull(files)).count() == 17 || Stream.of(Objects.requireNonNull(files)).count() > 17) {
+		for (int i = 0; Math.pow(2,i) < 32 ; i++) {
+			
+			if (Stream.of(Objects.requireNonNull(files)).count() == Math.pow(2,i)+1) {
+				valid = true;
+			}
+			
+		}
+		
+		if (valid) {
 			
 			Stream.of(Objects.requireNonNull(files)).forEach((f) -> {
 				
 				try {
 					
-					if (!f.getName().contains("background") && background[0] != null) {
+					if ((!f.getName().contains("background") || !f.getName().contains("back")) && background[0] != null) {
 						
 						images.add(new Image(f.getPath(),width,height,false,false)/*new Image(new FileInputStream(f))*/);
 						
@@ -65,11 +74,17 @@ public class ImageConverter {
 				throw ex[0];
 			}
 			
+			if (background[0] == null) {
+				
+				throw new IllegalStateException("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
+				
+			}
+			
 			images.forEach((i) -> spielkartes.add(new Spielkarte(i,background[0])));
 			
 			}else {
 				
-				throw new IllegalArgumentException("there must be at least 17 pictures");
+				throw new IllegalArgumentException("the amount of pictures has to be equal to a power of 2 + 1");
 				
 			}
 		
