@@ -54,104 +54,85 @@ public class ImageConverter {
 		ArrayList<Image> images = new ArrayList<>();
 		final Image[] background = {null};
 		final Exception[] ex = {null};
-		boolean valid = true;
 		final int[] counter = {0};
 		
-		/*
-		
-		valid = false
-		
-		for (int i = 0; Math.pow(2,i) < 32 ; i++) {
+		Stream.of(Objects.requireNonNull(files)).forEach((f) -> {
 			
-			if (Stream.of(Objects.requireNonNull(files)).count() == Math.pow(2,i)+1) {
-				valid = true;
+			try {
+				
+				Image image = new Image(f.getPath(),width,height,false,false);
+				
+				if (!image.isError()) {
+					
+					
+					if ((!f.getName().contains("background") || !f.getName().contains("back")) && background[0] != null) {
+						
+						images.add(image/*new Image(new FileInputStream(f))*/);
+						
+					} else {
+						
+						background[0] = image/*new Image(new FileInputStream(f))*/;
+						
+					}
+					
+					counter[0]++;
+					
+				}
+				
+			} catch (Exception e) {
+				ex[0] = e;
 			}
+			
+		});
+		
+		if (counter[0] == 0) {
+			
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText("No Files provided are images");
+			alert.show();
+			throw new IllegalStateException("No Files provided are images");
+			
+		}else if (counter[0] != Stream.of(Objects.requireNonNull(files)).count()) {
+			
+			Alert alert = new Alert(Alert.AlertType.WARNING);
+			alert.setContentText("Not all files in this folder are image files, reducing total number of cards");
+			alert.show();
+			
+			images.removeIf(Image::isError);
+			
+			for (int i = 0; Math.pow(2,i) < 32 ; i++) {
+				
+				if (images.size() < Math.pow(2,i)+1) {
+					
+					if (images.size() == Math.pow(2,i-1)) {
+						break;
+					}
+					
+					int amtToRemove = (int) (images.size() - Math.pow(2,i-1));
+					
+					for (int j = 0; j < amtToRemove; j++) {
+						
+						images.remove(images.size()-1);
+						
+					}
+				}
+			}
+			
+		}else if (ex[0] != null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText(ex[0].getMessage());
+			alert.show();
+			throw ex[0];
+		} else if (background[0] == null) {
+			
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
+			alert.show();
+			throw new IllegalArgumentException("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
 			
 		}
 		
-		*/
-		
-		if (valid) {
-			
-			Stream.of(Objects.requireNonNull(files)).forEach((f) -> {
-				
-				try {
-					
-					Image image = new Image(f.getPath(),width,height,false,false);
-					
-					if (!image.isError()) {
-						
-						
-						if ((!f.getName().contains("background") || !f.getName().contains("back")) && background[0] != null) {
-							
-							images.add(image/*new Image(new FileInputStream(f))*/);
-							
-						} else {
-							
-							background[0] = image/*new Image(new FileInputStream(f))*/;
-							
-						}
-						
-						counter[0]++;
-						
-					}
-					
-				} catch (Exception e) {
-					ex[0] = e;
-				}
-				
-			});
-			
-			if (counter[0] == 0) {
-				
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setContentText("No Files provided are images");
-				alert.show();
-				throw new IllegalStateException("No Files provided are images");
-				
-			}else if (counter[0] != Stream.of(Objects.requireNonNull(files)).count()) {
-				
-				Alert alert = new Alert(Alert.AlertType.WARNING);
-				alert.setContentText("Not all files in this folder are image files, reducing total number of cards");
-				alert.show();
-				
-				images.removeIf(Image::isError);
-				
-				for (int i = 0; Math.pow(2,i) < 32 ; i++) {
-					
-					if (images.size() < Math.pow(2,i)+1) {
-						
-						if (images.size() == Math.pow(2,i-1)) {
-							break;
-						}
-						
-						int amtToRemove = (int) (images.size() - Math.pow(2,i-1));
-						
-						for (int j = 0; j < amtToRemove; j++) {
-							
-							images.remove(images.size()-1);
-							
-						}
-					}
-				}
-				
-			}else if (ex[0] != null) {
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setContentText(ex[0].getMessage());
-				alert.show();
-				throw ex[0];
-			} else if (background[0] == null) {
-				
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setContentText("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
-				alert.show();
-				throw new IllegalArgumentException("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
-				
-			}
-			
-			images.forEach((i) -> spielkartes.add(new Spielkarte(i,background[0])));
-			
-			}
+		images.forEach((i) -> spielkartes.add(new Spielkarte(i,background[0])));
 		
 		return spielkartes;
 		
