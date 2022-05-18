@@ -98,6 +98,9 @@ public class ImageConverter {
 			
 			if (counter[0] == 0) {
 				
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("No Files provided are images");
+				alert.show();
 				throw new IllegalStateException("No Files provided are images");
 				
 			}else if (counter[0] != Stream.of(Objects.requireNonNull(files)).count()) {
