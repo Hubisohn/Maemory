@@ -10,7 +10,7 @@ import java.util.stream.*;
 
 public class ImageConverter {
 	
-	public static ArrayList<Spielkarte> convertWithDialog( @NotNull Integer width,@NotNull Integer height) throws Exception{
+	public static ArrayList<Spielkarte> convertWithDialog( Integer width, Integer height) throws Exception{
 		
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -36,15 +36,15 @@ public class ImageConverter {
 			
 		}else {
 			
-			return convertWithoutDialog(width,height,file.listFiles());
+			return convertWithoutDialog(width, height, file.listFiles());
 			
 		}
 		
 	}
 	
-	public static ArrayList<Spielkarte> convertWithoutDialog (@NotNull Integer width, @NotNull Integer height, @NotNull File... files) throws Exception {
+	public static ArrayList<Spielkarte> convertWithoutDialog (final Integer width, final Integer height, @NotNull File[] files) throws Exception {
 		
-		if (width <= 0 || height <= 0) {
+		if ((width != null && height != null) && (width <= 0 || height <= 0)) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("width and height must be greater than 0");
 			alert.show();
@@ -61,10 +61,17 @@ public class ImageConverter {
 			
 			try {
 				
-				Image image = new Image(f.getPath(),width,height,false,false);
+				Image image;
+				
+				
+				
+				if (width == null || height == null) {
+					image = new Image(f.getPath());
+				}else {
+					image = new Image(f.getPath(), width, height, false, false);
+				}
 				
 				if (!image.isError()) {
-					
 					
 					if ((!f.getName().contains("background") || !f.getName().contains("back")) && background[0] != null) {
 						
@@ -76,12 +83,13 @@ public class ImageConverter {
 						
 					}
 					
-					counter[0]++;
+					counter[0] = counter[0] + 1;
 					
 				}
 				
 			} catch (Exception e) {
 				ex[0] = e;
+				throw e;
 			}
 			
 		});
