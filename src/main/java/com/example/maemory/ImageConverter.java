@@ -6,23 +6,34 @@ import javafx.scene.image.*;
 import javafx.stage.*;
 import org.jetbrains.annotations.*;
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import java.util.stream.*;
 
 public class ImageConverter {
 	
-	public static ArrayList<Spielkarte> convertWithDialog(int width, int height) throws Exception{
+	public static ArrayList<Spielkarte> convertWithDialog(Integer width, Integer height) throws Exception{
 		
 		DirectoryChooser chooser = new DirectoryChooser();
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setContentText("The directory you select must contain an amount of image files equal to a power of 2 + 1.\nThe image to be used as the back of every card must contain \"back\" or \"background\" in its filename, the filenames of the other images do not matter.");
+		alert.showAndWait();
 		chooser.setTitle("choose directory with images");
 		File file = chooser.showDialog(null);
 		
-		if (!file.isDirectory()) {
+		if (file == null) {
 			
-			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText("no directory selected");
+			alert.show();
+			throw new NullPointerException("no directory selected");
+			
+		}else if (!file.isDirectory()) {
+			
+			alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("you must select a directory");
 			alert.show();
-			throw new IllegalArgumentException("you must select a directory");
+			throw new NotDirectoryException("you must select a directory");
 			
 		}else {
 			
@@ -46,6 +57,7 @@ public class ImageConverter {
 		final Image[] background = {null};
 		final Exception[] ex = {null};
 		boolean valid = false;
+		final int[] counter = {0};
 		
 		for (int i = 0; Math.pow(2,i) < 32 ; i++) {
 			
@@ -63,17 +75,20 @@ public class ImageConverter {
 					
 					Image image = new Image(f.getPath(),width,height,false,false);
 					
-					if (image.isError()) {
-						throw new LoadException("File is not of type image");
-					}
-					
-					if ((!f.getName().contains("background") || !f.getName().contains("back")) && background[0] != null) {
+					if (!image.isError()) {
 						
-						images.add(image/*new Image(new FileInputStream(f))*/);
 						
-					}else {
+						if ((!f.getName().contains("background") || !f.getName().contains("back")) && background[0] != null) {
+							
+							images.add(image/*new Image(new FileInputStream(f))*/);
+							
+						} else {
+							
+							background[0] = image/*new Image(new FileInputStream(f))*/;
+							
+						}
 						
-						background[0] = image/*new Image(new FileInputStream(f))*/;
+						counter[0]++;
 						
 					}
 					
@@ -83,14 +98,42 @@ public class ImageConverter {
 				
 			});
 			
-			if (ex[0] != null) {
+			if (counter[0] == 0) {
+				
+				throw new IllegalStateException("No Files provided are images");
+				
+			}else if (counter[0] != Stream.of(Objects.requireNonNull(files)).count()) {
+				
+				Alert alert = new Alert(Alert.AlertType.WARNING);
+				alert.setContentText("Not all files in this folder are image files, reducing total number of cards");
+				alert.show();
+				
+				images.removeIf(Image::isError);
+				
+				for (int i = 0; Math.pow(2,i) < 32 ; i++) {
+					
+					if (images.size() < Math.pow(2,i)+1) {
+						
+						if (images.size() == Math.pow(2,i-1)) {
+							break;
+						}
+						
+						int amtToRemove = (int) (images.size() - Math.pow(2,i-1));
+						
+						for (int j = 0; j < amtToRemove; j++) {
+							
+							images.remove(images.size()-1);
+							
+						}
+					}
+				}
+				
+			}else if (ex[0] != null) {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setContentText(ex[0].getMessage());
 				alert.show();
 				throw ex[0];
-			}
-			
-			if (background[0] == null) {
+			} else if (background[0] == null) {
 				
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setContentText("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
