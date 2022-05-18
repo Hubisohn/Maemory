@@ -1,4 +1,4 @@
-package com.example.spielkartensystem;
+package com.example.maemory;
 
 import javafx.scene.image.*;
 
