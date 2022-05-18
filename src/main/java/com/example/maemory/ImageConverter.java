@@ -10,7 +10,7 @@ import java.util.stream.*;
 
 public class ImageConverter {
 	
-	public static ArrayList<Spielkarte> convertWithDialog(Integer width, Integer height) throws Exception{
+	public static ArrayList<Spielkarte> convertWithDialog( @NotNull Integer width,@NotNull Integer height) throws Exception{
 		
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -47,9 +47,9 @@ public class ImageConverter {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("width and height must be greater than 0");
 			alert.show();
-			throw new IllegalArgumentException("width and height must be greater than 0");
+			throw new IllegalStateException("width and height must be greater than 0");
 		}
-		
+
 		ArrayList<Spielkarte> spielkartes = new ArrayList<>();
 		ArrayList<Image> images = new ArrayList<>();
 		final Image[] background = {null};
@@ -145,19 +145,12 @@ public class ImageConverter {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setContentText("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
 				alert.show();
-				throw new IllegalStateException("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
+				throw new IllegalArgumentException("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
 				
 			}
 			
 			images.forEach((i) -> spielkartes.add(new Spielkarte(i,background[0])));
 			
-			}else {
-			
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setContentText("the amount of pictures has to be equal to a power of 2 + 1");
-				alert.show();
-				throw new IllegalStateException("the amount of pictures has to be equal to a power of 2 + 1");
-				
 			}
 		
 		return spielkartes;
