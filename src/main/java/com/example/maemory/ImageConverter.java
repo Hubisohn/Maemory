@@ -63,12 +63,10 @@ public class ImageConverter {
 				
 				Image image;
 				
-				
-				
 				if (width == null || height == null) {
-					image = new Image(f.getPath());
+					image = new Image(String.valueOf(f.toURI().toURL()));
 				}else {
-					image = new Image(f.getPath(), width, height, false, false);
+					image = new Image(String.valueOf(f.toURI().toURL()), width, height, false, false);
 				}
 				
 				if (!image.isError()) {
@@ -89,7 +87,6 @@ public class ImageConverter {
 				
 			} catch (Exception e) {
 				ex[0] = e;
-				throw e;
 			}
 			
 		});
