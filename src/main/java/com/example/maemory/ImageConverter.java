@@ -54,8 +54,12 @@ public class ImageConverter {
 		ArrayList<Image> images = new ArrayList<>();
 		final Image[] background = {null};
 		final Exception[] ex = {null};
-		boolean valid = false;
+		boolean valid = true;
 		final int[] counter = {0};
+		
+		/*
+		
+		valid = false
 		
 		for (int i = 0; Math.pow(2,i) < 32 ; i++) {
 			
@@ -64,6 +68,8 @@ public class ImageConverter {
 			}
 			
 		}
+		
+		*/
 		
 		if (valid) {
 			
