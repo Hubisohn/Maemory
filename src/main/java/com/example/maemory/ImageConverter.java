@@ -1,6 +1,4 @@
 package com.example.maemory;
-
-import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.stage.*;
