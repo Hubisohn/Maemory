@@ -123,11 +123,11 @@ public class ImageConverter {
 			images.removeIf(Image::isError);
 			
 			
-				for (int i = 0; Math.pow(2, i) < 32; i++) {
+				for (int i = 0; Math.pow(2,i) < 32; i++) {
 					
-					if (images.size() < Math.pow(2, i)) {
+					if (images.size() < Math.pow(2,i)) {
 						
-						if (images.size() == Math.pow(2, i - 1)) {
+						if (images.size() == Math.pow(2,i - 1)) {
 							break;
 						}
 						
@@ -138,6 +138,8 @@ public class ImageConverter {
 							images.remove(images.size() - 1);
 							
 						}
+					}else if (images.size() == Math.pow(2,i)) {
+						break;
 					}
 					
 				}
