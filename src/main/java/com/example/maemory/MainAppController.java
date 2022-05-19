@@ -1,10 +1,10 @@
 package com.example.maemory;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.*;
+import javafx.scene.control.*;
 import javafx.scene.image.*;
+
 import java.util.*;
-import static java.lang.Thread.sleep;
 
 public class MainAppController {
     public ImageView front;
