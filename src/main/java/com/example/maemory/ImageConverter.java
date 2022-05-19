@@ -58,8 +58,6 @@ public class ImageConverter {
 		final Exception[] ex = {null};
 		final int[] counter = {0};
 		
-		System.out.println(files.length);
-		
 		Stream.of(Objects.requireNonNull(files)).forEach((f) -> {
 			
 			try {
