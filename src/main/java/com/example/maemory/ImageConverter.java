@@ -58,6 +58,8 @@ public class ImageConverter {
 		final Exception[] ex = {null};
 		final int[] counter = {0};
 		
+		System.out.println(files.length);
+		
 		Stream.of(Objects.requireNonNull(files)).forEach((f) -> {
 			
 			try {
@@ -72,13 +74,16 @@ public class ImageConverter {
 				
 				if (!image.isError()) {
 					
-					if ((!f.getName().contains("background") || !f.getName().contains("back")) && background[0] != null) {
+					if (f.getName().contains("background") || f.getName().contains("back")) {
 						
-						images.add(image/*new Image(new FileInputStream(f))*/);
+						System.out.println(2);
+						background[0] = image/*new Image(new FileInputStream(f))*/;
+
 						
 					} else {
 						
-						background[0] = image/*new Image(new FileInputStream(f))*/;
+						System.out.println(1);
+						images.add(image/*new Image(new FileInputStream(f))*/);
 						
 					}
 					
@@ -96,7 +101,13 @@ public class ImageConverter {
 			
 		});
 		
-		if (counter[0] == 0) {
+		if (ex[0] != null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText(ex[0].getMessage());
+			alert.show();
+			throw ex[0];
+			
+		}else if (counter[0] == 0) {
 			
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("No Files provided are images");
@@ -107,33 +118,30 @@ public class ImageConverter {
 			
 			Alert alert = new Alert(Alert.AlertType.WARNING);
 			alert.setContentText("Not all files in this folder are image files, reducing total number of cards");
-			alert.show();
+			alert.showAndWait();
 			
 			images.removeIf(Image::isError);
 			
-			for (int i = 0; Math.pow(2,i) < 32 ; i++) {
-				
-				if (images.size() < Math.pow(2,i)+1) {
-					
-					if (images.size() == Math.pow(2,i-1)) {
-						break;
-					}
-					
-					int amtToRemove = (int) (images.size() - Math.pow(2,i-1));
-					
-					for (int j = 0; j < amtToRemove; j++) {
-						
-						images.remove(images.size()-1);
-						
-					}
-				}
-			}
 			
-		}else if (ex[0] != null) {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setContentText(ex[0].getMessage());
-			alert.show();
-			throw ex[0];
+				for (int i = 0; Math.pow(2, i) < 32; i++) {
+					
+					if (images.size() < Math.pow(2, i)) {
+						
+						if (images.size() == Math.pow(2, i - 1)) {
+							break;
+						}
+						
+						int amtToRemove = (int) (images.size() - Math.pow(2, i - 1));
+						
+						for (int j = 0; j < amtToRemove; j++) {
+							
+							images.remove(images.size() - 1);
+							
+						}
+					}
+					
+				}
+			
 		} else if (background[0] == null) {
 			
 			Alert alert = new Alert(Alert.AlertType.ERROR);
