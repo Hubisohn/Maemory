@@ -12,7 +12,8 @@ public class MainAppController {
     @FXML
     protected void onHelloButtonClick() throws Exception {
         ArrayList<Spielkarte> list = ImageConverter.convertWithDialog(100,100);
-    
+        int delay = 500;
+        
         for (Spielkarte spielkarte: list) {
             
             new Timer().schedule(new TimerTask() {
@@ -20,13 +21,15 @@ public class MainAppController {
                 public void run() {
                     front.setImage(spielkarte.getFront());
                 }
-            },1000);
+            },delay);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     back.setImage(spielkarte.getBack());
                 }
-            },1000);
+            },delay);
+         
+            delay = delay + 500;
             
         }
         
