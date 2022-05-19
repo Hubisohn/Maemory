@@ -76,13 +76,11 @@ public class ImageConverter {
 					
 					if (f.getName().contains("background") || f.getName().contains("back")) {
 						
-						System.out.println(2);
 						background[0] = image/*new Image(new FileInputStream(f))*/;
 
 						
 					} else {
 						
-						System.out.println(1);
 						images.add(image/*new Image(new FileInputStream(f))*/);
 						
 					}
