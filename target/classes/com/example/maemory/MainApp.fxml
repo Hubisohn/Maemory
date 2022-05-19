@@ -9,9 +9,9 @@
 
     <center>
 
-        <VBox>
+        <VBox alignment="CENTER">
 
-            <HBox>
+            <HBox alignment="CENTER">
 
                 <ImageView fx:id="front" accessibleText="front"/>
                 <ImageView fx:id="back" accessibleText="back"/>

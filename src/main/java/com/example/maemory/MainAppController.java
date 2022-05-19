@@ -16,8 +16,18 @@ public class MainAppController {
     protected void onHelloButtonClick() throws Exception {
         ArrayList<Spielkarte> list = ImageConverter.convertWithDialog(100,100);
         
-        front.setImage(list.get(0).getFront());
-        back.setImage(list.get(0).getBack());
+        list.forEach((e) -> {
+    
+            front.setImage(e.getFront());
+            back.setImage(e.getBack());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+    
+        });
+        
         
     }
 }
