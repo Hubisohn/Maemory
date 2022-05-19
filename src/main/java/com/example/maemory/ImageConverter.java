@@ -4,6 +4,7 @@ import javafx.scene.image.*;
 import javafx.stage.*;
 import org.jetbrains.annotations.*;
 import java.io.*;
+import java.net.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.stream.*;
@@ -64,9 +65,9 @@ public class ImageConverter {
 				Image image;
 				
 				if (width == null || height == null) {
-					image = new Image(String.valueOf(f.toURI().toURL()));
+					image = new Image(f.toURI().toURL().toString());
 				}else {
-					image = new Image(String.valueOf(f.toURI().toURL()), width, height, false, false);
+					image = new Image(f.toURI().toURL().toString(), width, height, false, false);
 				}
 				
 				if (!image.isError()) {
@@ -85,8 +86,12 @@ public class ImageConverter {
 					
 				}
 				
+			} catch (MalformedURLException e) {
+				ex[0] = e;
+				throw new IllegalStateException(e);
 			} catch (Exception e) {
 				ex[0] = e;
+				throw e;
 			}
 			
 		});
