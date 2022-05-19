@@ -21,7 +21,7 @@ public class MainAppController {
             front.setImage(spielkarte.getFront());
             back.setImage(spielkarte.getBack());
             
-            sleep(1000);
+            wait(1000);
             
         }
         
