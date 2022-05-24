@@ -58,6 +58,13 @@ public class ImageConverter {
 		final Exception[] ex = {null};
 		final int[] counter = {0};
 		
+		if (files == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText("no Files provided");
+			alert.show();
+			throw new NullPointerException("no Files provided");
+		}
+		
 		Stream.of(Objects.requireNonNull(files)).forEach((f) -> {
 			
 			try {
