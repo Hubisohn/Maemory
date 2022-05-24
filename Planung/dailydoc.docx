@@ -1,0 +1,73 @@
+Maemory
+
+------------------------------------------------------------------------------- Prinzip -------------------------------------------------------------------------------
+Das Prinzip:
+Wir wollen das Spiel "Memory" nachprogrammieren. Da wir überzeug sind, dass das eine gute Idee für ein sehr interessantes Spiel ist,
+trafen wir diese Entscheidung.
+
+-------------------------------------------------------------------------- Spiel Bedingungen --------------------------------------------------------------------------
+
+Das Spiel muss folgende Bedingungen erfüllen:
+
+  - Funktioneller Singleplayer
+  - 1 Device 2 Player Mode
+  - Funktionieller Multiplayer im selben Netz
+  - Eigene Karten verwenden
+  - Statistiken über die Siege anzeigen
+
+Das Spiel sollte folgende Bedingungen erfüllen:
+
+  - 1 Device 2 Player Mode
+  - Statistik füe jeden Spieler gleich (über Server)
+  - Registrierungsfunktion
+  - Animationen bei den Karten
+  
+Das Spiel könnte in Zukunft haben:
+
+  - Multiplayer über das Internet, nicht nur Lokal
+  - Webplayer
+  - Verschiedene PC - KI stärken
+  
+  
+------------------------------------------------------------------------- Aufgaben Verteilung -------------------------------------------------------------------------  
+ 
+  Elias Gasser:
+    - Login Bildschirm mit grafischem Design
+    - Statistiken umsetzen
+    - Darstellung der Statistiken
+  
+  Marcel Trenkwalder:
+    - Formatieren der Spielkarten
+    - Einfügen der eigenen Bilder für Karten
+    - Statistiken umsetzen
+  
+  Manuel Unterhuber:
+    - Multiplayer ausprogrammieren
+    - Server erstellen
+    - Verfügbare Server listen
+  
+  Stefan Plankensteiner:
+    - Spielprinzip
+    - Singleplayer gegen PC - KI
+    - 1v1 auf dem selben Gerät
+ 
+----------------------------------------------------------------------- Tägliche Dokumentation ------------------------------------------------------------------------
+
+Tag 1:
+Der erste Tag war der Tag der wohl wichtigesten Besprechung. Wir setzten uns alle bei einem Meeting zusammen und besprachen wie wir das Spiel umsetzen wollen. Schon bald kamen die ersten technischen Fragen in den Raum die einige Probleme aufwarfen. Das zentrale Thema war der Multiplayer und dessen Umsetzung. Wir waren uns nicht sicher ob wir den Multiplayer vorerst Lokal, also im selbem Netz, oder auf dem Schulserver hosten wollten. Schlussendlich wurden diese Fragen geklärt und es kam zur Aufgabenverteilung. Bei der Aufgabenverteilung gab es keine Probleme. Jeder war mit seiner jeweiligen Aufgabe zufrieden.
+
+Tag 2:
+Wir begannen mit der Planung. Die Planung warf zuerst viele Fragezeichen auf. Wir entschieden uns dazu, Sequenz/- und Activity - Diagramme zu erstellen. Jeder erstellte also für seinen Teil des Projektes ein Diagramm. Das Planen war ein zentraler Teil des Projektes, da wir viele Fragen lösen konnte die uns alle gemeinsam Betreffen.
+
+Tag 3:
+Wir begannen mit den ersten Programmierschritten. Einige von uns hingen noch in der Planung, aber die wurden nicht beeinflusst. Wer bereits soweit war konnte mit seinen Teil des Projektes beginnen. Außerdem kam die Idee eines täglichen Meetings in dem Raum. Von nun an Besprechen wir immer vor und nach der Arbeit, was wir leisten wollen und was wir geleistet haben.
+
+Tag 4:
+Das Projekt geht voran. Die ersten Designideen stehen fest. Man kann bereits eigene Spiele starten und Karten löschen. Außerdem ist man beim Multiplayer bereits anpingbar (UDP). Der Startbildschirm mit einem Startbild existiert ebenfalls und man kann schon die ersten eigenen Bilder importieren und formatieren. Beim Meeting wurden einige neue Vorschläge eingebracht die wir ins Projekt einbringen werden. 
+
+
+Tag 4:
+Es gibt einige Probleme mit dem Projekt. Es stehen einige Fragen im Raum die den Fortschritt verlangsamen. Wichtige Fragen zur Statistik und zum Multiplayer können momentan nicht gelöst werden aufgrund von Zeitproblemen. Das Projekt steht aber wir haben beim täglichen Meeting schon Lösungsansätze für unsere Probleme gefunden. 
+
+Tag 5:
+Das Projekt kommt wieder wie gewohnt voran. Der Multiplayer ist jetzt soweit bereit und wartet auf das fertige Spiel zum verbinden. Außerdem kann man nun beim Singleplayer lokal schon ein 1v1 spielen. Der Startbildschrim ist nun ebenfalls bereit und wartet auf die Verbindung mit den anderen Projektteilen. Der stand des Projektes ist gut und beim Meeting wurde alles nötige besprochen.
