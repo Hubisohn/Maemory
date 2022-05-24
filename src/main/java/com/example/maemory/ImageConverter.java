@@ -15,7 +15,7 @@ public class ImageConverter {
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setHeaderText("Important!");
-		alert.setContentText("The directory you select must contain an amount of image files equal to "+Math.pow(size, 2)+"+ 1.\nThe image to be used as the back of every card must contain \"back\" or \"background\" in its filename, the filenames of the other images do not matter.");
+		alert.setContentText("The directory you select must contain an amount of image files equal to "+ (int) Math.pow(size, 2)+"+ 1.\nThe image to be used as the back of every card must contain \"back\" or \"background\" in its filename, the filenames of the other images do not matter.");
 		alert.showAndWait();
 		chooser.setTitle("choose directory with images");
 		File file = chooser.showDialog(null);
