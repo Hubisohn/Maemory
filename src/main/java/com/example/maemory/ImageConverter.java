@@ -118,7 +118,7 @@ public class ImageConverter {
 			alert.show();
 			throw new IllegalStateException("No Files provided are images");
 			
-		}else if (Math.pow(size, 2) != Stream.of(Objects.requireNonNull(images)).count()) {
+		}else if (Math.pow(size, 2) != images.size()) {
 			
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("Not Enough images provided");
