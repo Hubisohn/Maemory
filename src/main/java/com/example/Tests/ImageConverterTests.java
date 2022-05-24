@@ -12,18 +12,18 @@ public class ImageConverterTests {
 	
 	
 		@Test
-		private void convertImageNegativeSize () throws Exception {
+		private void convertImageNegativeSize () {
 			
 			FXCollections.observableArrayList(new ArrayList<Object>());
 			
-			assertThrows(IllegalArgumentException.class,() -> ImageConverter.convertWithoutDialog(-1,-1,null));
+			assertThrows(IllegalArgumentException.class,() -> ImageConverter.convertWithoutDialog(-1,-1,null,4));
 			
 		}
 	
 		@Test
-		private void convertImageNoFiles () throws Exception {
+		private void convertImageNoFiles () {
 		
-			assertThrows(NullPointerException.class,() -> ImageConverter.convertWithoutDialog(1,1,null));
+			assertThrows(NullPointerException.class,() -> ImageConverter.convertWithoutDialog(1,1,null,4));
 		
 		}
 

@@ -11,7 +11,7 @@ public class MainAppController {
     
     @FXML
     protected void onHelloButtonClick() throws Exception {
-        ArrayList<Spielkarte> list = ImageConverter.convertWithDialog(100,100);
+        ArrayList<Spielkarte> list = ImageConverter.convertWithDialog(100,100,4);
         int delay = 500;
         
         for (Spielkarte spielkarte: list) {

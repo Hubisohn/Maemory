@@ -6,9 +6,12 @@
 <?import javafx.scene.image.ImageView?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.maemory.MainAppController">
 
     <center>
+
 
         <VBox alignment="CENTER" spacing="10">
 

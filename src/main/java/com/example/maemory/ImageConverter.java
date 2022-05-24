@@ -10,7 +10,7 @@ import java.util.stream.*;
 
 public class ImageConverter {
 	
-	public static ArrayList<Spielkarte> convertWithDialog( Integer width, Integer height) throws Exception{
+	public static ArrayList<Spielkarte> convertWithDialog( Integer width, Integer height, Integer size) throws Exception{
 		
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -36,13 +36,13 @@ public class ImageConverter {
 			
 		}else {
 			
-			return convertWithoutDialog(width, height, file.listFiles());
+			return convertWithoutDialog(width, height, file.listFiles(), size);
 			
 		}
 		
 	}
 	
-	public static ArrayList<Spielkarte> convertWithoutDialog (final Integer width, final Integer height, File[] files) throws Exception {
+	public static ArrayList<Spielkarte> convertWithoutDialog (final Integer width, final Integer height, File[] files, Integer size) throws Exception {
 		
 		if ((width != null && height != null) && (width <= 0 || height <= 0)) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -103,6 +103,8 @@ public class ImageConverter {
 			
 		});
 		
+		images.removeIf(Image::isError);
+		
 		if (ex[0] != null) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText(ex[0].getMessage());
@@ -116,35 +118,12 @@ public class ImageConverter {
 			alert.show();
 			throw new IllegalStateException("No Files provided are images");
 			
-		}else if (counter[0] != Stream.of(Objects.requireNonNull(files)).count()) {
+		}else if (Math.pow(size, 2) != Stream.of(Objects.requireNonNull(images)).count()) {
 			
-			Alert alert = new Alert(Alert.AlertType.WARNING);
-			alert.setContentText("Not all files in this folder are image files, reducing total number of cards");
-			alert.showAndWait();
-			
-			images.removeIf(Image::isError);
-			
-			
-				for (int i = 0; Math.pow(2,i) < 32; i++) {
-					
-					if (images.size() < Math.pow(2,i)) {
-						
-						if (images.size() == Math.pow(2,i - 1)) {
-							break;
-						}
-						
-						int amtToRemove = (int) (images.size() - Math.pow(2, i - 1));
-						
-						for (int j = 0; j < amtToRemove; j++) {
-							
-							images.remove(images.size() - 1);
-							
-						}
-					}else if (images.size() == Math.pow(2,i)) {
-						break;
-					}
-					
-				}
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText("Not Enough images provided");
+			alert.show();
+			throw new IllegalStateException("Not Enough images provided");
 			
 		} else if (background[0] == null) {
 			
