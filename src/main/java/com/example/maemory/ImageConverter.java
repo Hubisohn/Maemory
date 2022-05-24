@@ -2,7 +2,6 @@ package com.example.maemory;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.stage.*;
-import org.jetbrains.annotations.*;
 import java.io.*;
 import java.net.*;
 import java.nio.file.*;
@@ -43,7 +42,7 @@ public class ImageConverter {
 		
 	}
 	
-	public static ArrayList<Spielkarte> convertWithoutDialog (final Integer width, final Integer height, @NotNull File[] files) throws Exception {
+	public static ArrayList<Spielkarte> convertWithoutDialog (final Integer width, final Integer height, File[] files) throws Exception {
 		
 		if ((width != null && height != null) && (width <= 0 || height <= 0)) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
