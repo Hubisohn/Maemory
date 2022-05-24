@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Maemory" options="--add-exports org.junit.jupiter.api/org.junit=com.example.maemory" />
+      <module name="Maemory" options="" />
     </option>
   </component>
 </project>
