@@ -21,7 +21,7 @@ public class CardSetFunctions {
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setHeaderText("Important!");
-		alert.setContentText("The directory you select must contain an amount of image files equal to "+ (int) ((Math.pow(size, 2) / 2) + 1) +".\nThe image to be used as the back of every card must contain \"back\" or \"background\" in its filename, the filenames of the other images do not matter.");
+		alert.setContentText("The directory you select must contain an amount of image files equal to at least "+ (int) ((Math.pow(size, 2) / 2) + 1) +".\nThe image to be used as the back of every card must contain \"back\" or \"background\" in its filename, the filenames of the other images do not matter.");
 		alert.showAndWait();
 		chooser.setTitle("choose directory with images");
 		File file = chooser.showDialog(null);
@@ -257,7 +257,7 @@ public class CardSetFunctions {
 			if (Objects.requireNonNull(file.listFiles()).length < 9) {
 				
 				Alert alert = new Alert(Alert.AlertType.WARNING);
-				alert.setContentText("an invalid Set has been found, consisting of only "+Objects.requireNonNull(file.listFiles()).length+" images when 9 is the minimum number of images required.\n It will be deleted.");
+				alert.setContentText("an invalid Set consisting of only "+Objects.requireNonNull(file.listFiles()).length+" images has been found.\nthe minimum number of images required is 9. It will be deleted.");
 				alert.setWidth(120);
 				alert.setResizable(true);
 				alert.showAndWait();
