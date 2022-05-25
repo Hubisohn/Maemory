@@ -217,7 +217,7 @@ public class CardSetFunctions {
 		Button add_new_set = new Button("Add new Set");
 		Button confirm = new Button("Confirm");
 		Button abort = new Button("Abort");
-		HBox buttonBox = new HBox(add_new_set,confirm);
+		HBox buttonBox = new HBox(add_new_set,abort,confirm);
 		BorderPane pane = new BorderPane();
 		Scene scene = new Scene(pane,350,220);
 		
@@ -240,7 +240,7 @@ public class CardSetFunctions {
 				e.printStackTrace();
 			}
 		});
-		confirm.setOnAction((a) -> {
+		confirm.setOnAction((q) -> {
 			
 			if (!Objects.equals(path[0], "")) {
 				stage.close();
@@ -252,7 +252,7 @@ public class CardSetFunctions {
 			}
 			
 		});
-		abort.setOnAction(() -> stage.close());
+		abort.setOnAction((q) -> stage.close());
 		
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
