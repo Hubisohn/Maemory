@@ -1,4 +1,5 @@
 package com.example.maemory;
+import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -232,11 +233,10 @@ public class CardSetFunctions {
 			
 				path[0] = file.getPath();
 				select.setTextFill(Color.GREEN);
-				
 				buttons.forEach((b) -> {
 					
 					if (b != select) {
-						b.setTextFill(null);
+						b.setTextFill(Color.BLACK);
 					}
 					
 				});
