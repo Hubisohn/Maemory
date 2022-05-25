@@ -211,7 +211,8 @@ public class CardSetFunctions {
 		HBox hBox = new HBox();
 		Button add_new_set = new Button("add new Set");
 		Button confirm = new Button("Confirm");
-		VBox vBox = new VBox(hBox,new HBox(add_new_set,confirm));
+		HBox buttonBox = new HBox(add_new_set,confirm);
+		VBox vBox = new VBox(hBox,buttonBox);
 		BorderPane pane = new BorderPane();
 		pane.setCenter(vBox);
 		Scene scene = new Scene(pane);
@@ -221,6 +222,8 @@ public class CardSetFunctions {
 		vBox.setAlignment(Pos.CENTER);
 		hBox.setSpacing(15);
 		hBox.setAlignment(Pos.CENTER);
+		buttonBox.setSpacing(1);
+		buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
 		add_new_set.setOnAction((q) -> {
 			try {
 				convertToCardSetWithDialog(100,100,size);
