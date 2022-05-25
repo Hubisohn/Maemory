@@ -213,8 +213,9 @@ public class CardSetFunctions {
 		Button confirm = new Button("Confirm");
 		HBox buttonBox = new HBox(add_new_set,confirm);
 		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane,300,120);
+		Scene scene = new Scene(pane,300,200);
 		
+		stage.setMaxWidth(500);
 		stage.setTitle("CardSets");
 		pane.setCenter(hBox);
 		pane.setBottom(buttonBox);
