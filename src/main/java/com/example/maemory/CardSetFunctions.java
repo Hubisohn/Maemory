@@ -218,8 +218,6 @@ public class CardSetFunctions {
 		pane.setCenter(hBox);
 		pane.setBottom(buttonBox);
 		stage.setScene(scene);
-		vBox.setSpacing(15);
-		vBox.setAlignment(Pos.CENTER);
 		hBox.setSpacing(15);
 		hBox.setAlignment(Pos.CENTER);
 		buttonBox.setSpacing(1);
