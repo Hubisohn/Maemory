@@ -265,7 +265,7 @@ public class CardSetFunctions {
 					for (File image: Objects.requireNonNull(file.listFiles())) {
 						
 						if (!image.delete()) {
-							System.err.println("can not delete image");
+							System.err.println("can not delete file");
 						}
 						
 					}
