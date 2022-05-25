@@ -8,9 +8,9 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.*;
 
-public class ImageConverter {
+public class CardSetFunctions {
 	
-	public static ArrayList<Spielkarte> convertWithDialog( Integer width, Integer height, Integer size) throws Exception{
+	public static ArrayList<Spielkarte> convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception{
 		
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -36,13 +36,13 @@ public class ImageConverter {
 			
 		}else {
 			
-			return convertWithoutDialog(width, height, file.listFiles(), size);
+			return convertToCardSetWithoutDialog(width, height, file.listFiles(), size);
 			
 		}
 		
 	}
 	
-	public static ArrayList<Spielkarte> convertWithoutDialog (final Integer width, final Integer height, File[] files, Integer size) throws Exception {
+	public static ArrayList<Spielkarte> convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
 		
 		if ((width != null && height != null) && (width <= 0 || height <= 0)) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -139,6 +139,14 @@ public class ImageConverter {
 		return spielkartes;
 		
 		
+	}
+	
+	public void showCarSetSelectionDialog () {
+	
+	
+		
+	
+	
 	}
 	
 }

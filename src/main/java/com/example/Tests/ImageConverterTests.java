@@ -16,14 +16,14 @@ public class ImageConverterTests {
 			
 			FXCollections.observableArrayList(new ArrayList<Object>());
 			
-			assertThrows(IllegalArgumentException.class,() -> ImageConverter.convertWithoutDialog(-1,-1,null,4));
+			assertThrows(IllegalArgumentException.class,() -> CardSetFunctions.convertToCardSetWithoutDialog(-1,-1,null,4));
 			
 		}
 	
 		@Test
 		private void convertImageNoFiles () {
 		
-			assertThrows(NullPointerException.class,() -> ImageConverter.convertWithoutDialog(1,1,null,4));
+			assertThrows(NullPointerException.class,() -> CardSetFunctions.convertToCardSetWithoutDialog(1,1,null,4));
 		
 		}
 
