@@ -11,7 +11,7 @@ public class MainAppController {
     
     @FXML
     protected void onHelloButtonClick() throws Exception {
-        CardSetFunctions.convertToCardSetWithDialog(100,100,3);
+        CardSetFunctions.convertToCardSetWithDialog(100,100,4);
         
         CardSetFunctions.showCarSetSelectionDialog();
     }

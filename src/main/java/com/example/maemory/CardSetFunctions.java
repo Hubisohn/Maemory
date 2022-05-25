@@ -46,7 +46,14 @@ public class CardSetFunctions {
 	
 	public static String convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
 		
-		if ((width != null && height != null) && (width <= 0 || height <= 0)) {
+		if (size % 2 != 0) {
+			
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText("the size must be an even value");
+			alert.show();
+			throw new IllegalArgumentException("the size must be an even value");
+			
+		}if ((width != null && height != null) && (width <= 0 || height <= 0)) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("width and height must be greater than 0");
 			alert.show();
@@ -104,8 +111,6 @@ public class CardSetFunctions {
 			
 		});
 		
-		images.removeIf(Image::isError);
-		
 		if (ex[0] != null) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText(ex[0].getMessage());
@@ -121,6 +126,9 @@ public class CardSetFunctions {
 			
 		}else if (Math.pow(size,2) / 2 != images.size()) {
 			
+			
+			images.removeIf(Image::isError);
+			
 			if (Math.pow(size,2) / 2 > images.size()) {
 				
 				Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -131,6 +139,8 @@ public class CardSetFunctions {
 			}else {
 				
 				while (Math.pow(size,2) / 2 != images.size()) {
+					System.out.println(images.size());
+					System.out.println(Math.pow(size,2) / 2);
 					images.remove(images.size()-1);
 				}
 				
