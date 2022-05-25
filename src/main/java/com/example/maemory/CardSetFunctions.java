@@ -188,7 +188,7 @@ public class CardSetFunctions {
 		
 		if(new File("src/main/resources/com/example/maemory/CardSets/"+s+"/").mkdir()) {
 			
-			Files.copy(Path.of(background[0].getUrl().replace("file:/", "").replace("%20", " ")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/background.jpg"), StandardCopyOption.ATOMIC_MOVE);
+			Files.copy(Path.of(background[0].getUrl().replace("file:/", "").replace("%20", " ")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/background.jpg"));
 			
 			for (Image image : images) {
 				
