@@ -254,14 +254,28 @@ public class CardSetFunctions {
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
 			if (Objects.requireNonNull(file.listFiles()).length < 9) {
+				
 				if(!file.delete()) {
+					
+					for (File image: Objects.requireNonNull(file.listFiles())) {
+						
+						if (!image.delete()) {
+							System.err.println("can not delete image");
+						}
+						
+					}
+					
+					if (!file.delete()) {
+						System.err.println("could not delete directory");
+					}
+ 				
 					continue;
-				} else {
-					Alert alert = new Alert(Alert.AlertType.WARNING);
-					alert.setContentText("an invalid Set has been found, consisting of only "+Objects.requireNonNull(file.listFiles()).length+" images when 9 is the minimum number of images required.\n It will be deleted.");
-					alert.show();
-					System.err.println("deleted invalid sets");
 				}
+				
+				Alert alert = new Alert(Alert.AlertType.WARNING);
+				alert.setContentText("an invalid Set has been found, consisting of only "+Objects.requireNonNull(file.listFiles()).length+" images when 9 is the minimum number of images required.\n It will be deleted.");
+				alert.showAndWait();
+				System.err.println("deleted invalid sets");
 				continue;
 			}
 			
