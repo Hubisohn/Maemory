@@ -121,10 +121,20 @@ public class CardSetFunctions {
 			
 		}else if (Math.pow(size,2) / 2 != images.size()) {
 			
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setContentText("Not Enough images provided");
-			alert.show();
-			return null;
+			if (Math.pow(size,2) / 2 > images.size()) {
+				
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("Not Enough images provided");
+				alert.show();
+				return null;
+				
+			}else {
+				
+				while (Math.pow(size,2) / 2 != images.size()) {
+					images.remove(images.size()-1);
+				}
+				
+			}
 			
 		} else if (background[0] == null) {
 			
@@ -198,12 +208,12 @@ public class CardSetFunctions {
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
 			ImageView imageView = new ImageView();
-			Button select = new Button("select"+file.getName());
+			Button select = new Button("select "+file.getName());
 			VBox imageBox = new VBox(imageView,select);
 			
 			imageBox.setSpacing(5);
 			hBox.getChildren().add(imageBox);
-			imageView.setImage(new Image(new FileInputStream(Objects.requireNonNull(file.listFiles())[0])));
+			imageView.setImage(new Image(file.toURI().toURL().toString(),100,100,false,false));
 			
 			for (File image: Objects.requireNonNull(file.listFiles())) {
 			
