@@ -222,7 +222,6 @@ public class CardSetFunctions {
 		
 		stage.setMinHeight(220);
 		stage.setMinWidth(350);
-		stage.setMaxWidth(500);
 		stage.setTitle("CardSets");
 		pane.setCenter(hBox);
 		pane.setBottom(buttonBox);
