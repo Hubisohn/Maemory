@@ -3,6 +3,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.*;
 import javafx.stage.*;
 import java.io.*;
 import java.net.*;
@@ -193,11 +194,14 @@ public class CardSetFunctions {
 	}
 	
 	public static String showCarSetSelectionDialog () throws Exception {
-	
+		
+		final String[] path = new String[1];
+		final ArrayList<Button> buttons = new ArrayList<>();
 		Stage stage = new Stage();
 		HBox hBox = new HBox();
-		Button button = new Button("add new Set");
-		VBox vBox = new VBox(hBox,button);
+		Button add_new_set = new Button("add new Set");
+		Button confirm = new Button("Confirm");
+		VBox vBox = new VBox(hBox,new HBox(add_new_set,confirm));
 		BorderPane pane = new BorderPane();
 		pane.setCenter(vBox);
 		Scene scene = new Scene(pane);
@@ -205,7 +209,7 @@ public class CardSetFunctions {
 		stage.setScene(scene);
 		vBox.setSpacing(10);
 		hBox.setSpacing(10);
-		button.setOnAction((q) -> {
+		add_new_set.setOnAction((q) -> {
 			try {
 				convertToCardSetWithDialog(100,100,4);
 			} catch (Exception e) {
@@ -218,16 +222,25 @@ public class CardSetFunctions {
 			ImageView imageView = new ImageView();
 			Button select = new Button("select "+file.getName());
 			VBox imageBox = new VBox(imageView,select);
+			buttons.add(select);
 			
 			imageBox.setSpacing(5);
 			hBox.getChildren().add(imageBox);
 			imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(),100,100,false,false));
 			
-			button.setOnAction((q) -> {
+			select.setOnAction((q) -> {
 			
-			
-			
-			
+				path[0] = file.getPath();
+				select.setTextFill(Color.GREEN);
+				
+				buttons.forEach((b) -> {
+					
+					if (b != select) {
+						b.setTextFill(null);
+					}
+					
+				});
+				
 			});
 			
 		}
