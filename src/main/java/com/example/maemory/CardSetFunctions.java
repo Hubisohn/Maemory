@@ -214,8 +214,9 @@ public class CardSetFunctions {
 		final ArrayList<Button> buttons = new ArrayList<>();
 		Stage stage = new Stage();
 		HBox hBox = new HBox();
-		Button add_new_set = new Button("add new Set");
+		Button add_new_set = new Button("Add new Set");
 		Button confirm = new Button("Confirm");
+		Button abort = new Button("Abort");
 		HBox buttonBox = new HBox(add_new_set,confirm);
 		BorderPane pane = new BorderPane();
 		Scene scene = new Scene(pane,350,220);
@@ -251,21 +252,22 @@ public class CardSetFunctions {
 			}
 			
 		});
+		abort.setOnAction(() -> stage.close());
 		
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
 			if (Objects.requireNonNull(file.listFiles()).length < 9) {
 				
 				Alert alert = new Alert(Alert.AlertType.WARNING);
-				alert.setContentText("an invalid Set consisting of only "+Objects.requireNonNull(file.listFiles()).length+" images has been found.\nthe minimum number of images required is 9. It will be deleted.");
+				alert.setContentText("an invalid Set consisting of only " + Objects.requireNonNull(file.listFiles()).length + " images has been found.\nthe minimum number of images required is 9. It will be deleted.");
 				alert.setWidth(120);
 				alert.setResizable(true);
 				alert.showAndWait();
-				System.err.println("deleted directory "+file.getName());
+				System.err.println("deleted directory " + file.getName());
 				
-				if(!file.delete()) {
+				if (!file.delete()) {
 					
-					for (File image: Objects.requireNonNull(file.listFiles())) {
+					for (File image : Objects.requireNonNull(file.listFiles())) {
 						
 						if (!image.delete()) {
 							System.err.println("can not delete file");
@@ -276,42 +278,46 @@ public class CardSetFunctions {
 					if (!file.delete()) {
 						System.err.println("could not delete directory");
 					}
-
+					
 				}
 				
 				continue;
 			}
 			
-			ImageView imageView = new ImageView();
-			Button select = new Button("select "+file.getName());
-			VBox imageBox = new VBox(imageView,select);
-			buttons.add(select);
-			
-			imageBox.setSpacing(5);
-			imageBox.setAlignment(Pos.CENTER);
-			hBox.getChildren().add(imageBox);
-			try {
-				imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(),100,100,false,false));
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-			
-			select.setOnAction((q) -> {
-			
-				path[0] = file.getPath();
-				select.setTextFill(Color.GREEN);
-				buttons.forEach((b) -> {
+			if (Objects.requireNonNull(file.listFiles()).length >= Math.pow(size,2) / 2  + 1) {
+				
+				ImageView imageView = new ImageView();
+				Button select = new Button("select " + file.getName());
+				VBox imageBox = new VBox(imageView, select);
+				buttons.add(select);
+				
+				imageBox.setSpacing(5);
+				imageBox.setAlignment(Pos.CENTER);
+				hBox.getChildren().add(imageBox);
+				try {
+					imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(), 100, 100, false, false));
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+				
+				select.setOnAction((q) -> {
 					
-					if (b != select) {
-						b.setTextFill(Color.BLACK);
-					}
+					path[0] = file.getPath();
+					select.setTextFill(Color.GREEN);
+					buttons.forEach((b) -> {
+						
+						if (b != select) {
+							b.setTextFill(Color.BLACK);
+						}
+						
+					});
 					
 				});
 				
-			});
+			}
 			
 		}
-		
+			
 		stage.showAndWait();
 		
 		if (newSet[0]) {
@@ -320,6 +326,7 @@ public class CardSetFunctions {
 		}else {
 			return path[0];
 		}
+		
 		
 	
 	}
