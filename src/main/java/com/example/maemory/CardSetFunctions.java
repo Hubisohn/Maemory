@@ -253,12 +253,12 @@ public class CardSetFunctions {
 		
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
-			Alert alert = new Alert(Alert.AlertType.WARNING);
-			alert.setContentText("an invalid Set has been found, consisting of only "+Objects.requireNonNull(file.listFiles()).length+" images when 9 is the minimum number of images required.\n It will be deleted.");
-			alert.showAndWait();
-			System.err.println("deleted invalid sets");
-			
 			if (Objects.requireNonNull(file.listFiles()).length < 9) {
+				
+				Alert alert = new Alert(Alert.AlertType.WARNING);
+				alert.setContentText("an invalid Set has been found, consisting of only "+Objects.requireNonNull(file.listFiles()).length+" images when 9 is the minimum number of images required.\n It will be deleted.");
+				alert.showAndWait();
+				System.err.println("deleted invalid sets");
 				
 				if(!file.delete()) {
 					
