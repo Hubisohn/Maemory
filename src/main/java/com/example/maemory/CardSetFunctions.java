@@ -205,7 +205,7 @@ public class CardSetFunctions {
 	public static String showCardSetSelectionDialog (int size) {
 		
 		final boolean[] newSet = {false};
-		final String[] path = new String[1];
+		final String[] path = new String[]{""};
 		final ArrayList<Button> buttons = new ArrayList<>();
 		Stage stage = new Stage();
 		HBox hBox = new HBox();
@@ -233,7 +233,18 @@ public class CardSetFunctions {
 				e.printStackTrace();
 			}
 		});
-		confirm.setOnAction((a) -> stage.close());
+		confirm.setOnAction((a) -> {
+			
+			if (!Objects.equals(path[0], "")) {
+				stage.close();
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("No Set selected");
+				alert.show();
+				System.err.println("No Set selected");
+			}
+			
+		});
 		
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
