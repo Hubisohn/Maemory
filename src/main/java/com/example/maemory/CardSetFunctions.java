@@ -213,14 +213,15 @@ public class CardSetFunctions {
 		Button confirm = new Button("Confirm");
 		HBox buttonBox = new HBox(add_new_set,confirm);
 		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane);
+		Scene scene = new Scene(pane,300,120);
 		
+		stage.setTitle("CardSets");
 		pane.setCenter(hBox);
 		pane.setBottom(buttonBox);
 		stage.setScene(scene);
 		hBox.setSpacing(15);
 		hBox.setAlignment(Pos.CENTER);
-		buttonBox.setSpacing(1);
+		buttonBox.setSpacing(2);
 		buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
 		add_new_set.setOnAction((q) -> {
 			try {
@@ -248,6 +249,7 @@ public class CardSetFunctions {
 			buttons.add(select);
 			
 			imageBox.setSpacing(5);
+			imageBox.setAlignment(Pos.CENTER);
 			hBox.getChildren().add(imageBox);
 			try {
 				imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(),100,100,false,false));
