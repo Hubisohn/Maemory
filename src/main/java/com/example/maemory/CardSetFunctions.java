@@ -220,6 +220,7 @@ public class CardSetFunctions {
 		BorderPane pane = new BorderPane();
 		Scene scene = new Scene(pane,300,200);
 		
+		stage.setMinWidth(250);
 		stage.setMaxWidth(500);
 		stage.setTitle("CardSets");
 		pane.setCenter(hBox);
