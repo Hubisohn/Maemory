@@ -261,7 +261,7 @@ public class CardSetFunctions {
 				alert.setWidth(120);
 				alert.setResizable(true);
 				alert.showAndWait();
-				System.err.println("deleted invalid Sets");
+				System.err.println("deleted directory "+file.getName());
 				
 				if(!file.delete()) {
 					
