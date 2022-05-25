@@ -179,18 +179,26 @@ public class CardSetFunctions {
 			
 		}
 		
-		new File("src/main/resources/com/example/maemory/CardSets/"+s+"/").mkdir();
-		
-		Files.move(Path.of(background[0].getUrl().replace("file:/", "")), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/background.jpg"),StandardCopyOption.ATOMIC_MOVE);
-		
-		for (Image image: images) {
+		if(new File("src/main/resources/com/example/maemory/CardSets/"+s+"/").mkdir()) {
 			
-			Files.move(Path.of(image.getUrl().replace("file:/", "").replace("%20"," ")), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/"+i+".jpg"));
-			i++;
+			Files.move(Path.of(background[0].getUrl().replace("file:/", "")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/background.jpg"), StandardCopyOption.ATOMIC_MOVE);
 			
+			for (Image image : images) {
+				
+				Files.move(Path.of(image.getUrl().replace("file:/", "").replace("%20", " ")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/" + i + ".jpg"));
+				i++;
+				
+			}
+			
+			return "src/main/resources/com/example/maemory/CardSets/"+s;
+			
+		}else {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setContentText("could not create directory");
+			alert.show();
+			throw new FileNotFoundException("could not create directory");
 		}
 		
-		return "src/main/resources/com/example/maemory/CardSets/"+s;
 		
 	}
 	
