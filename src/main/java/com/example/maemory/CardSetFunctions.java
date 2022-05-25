@@ -165,10 +165,11 @@ public class CardSetFunctions {
 		VBox vBox = new VBox(new Label("please type the name of the new CardSet"),field);
 		BorderPane borderpane = new BorderPane();
 		Scene scene = new Scene(borderpane,240,120);
+		borderpane.setTop(new Label("please type the name of the new CardSet"));
 		borderpane.setCenter(vBox);
 		borderpane.setBottom(button);
 		button.setOnAction((a) -> stage.close());
-		vBox.setSpacing(15);
+		vBox.setSpacing(5);
 		vBox.setAlignment(Pos.CENTER);
 		field.setPromptText("name of the new CardSet");
 		stage.setScene(scene);
