@@ -15,7 +15,7 @@ import java.util.stream.*;
 
 public class CardSetFunctions {
 	
-	public static String convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception{
+	public static void convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception{
 		
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -41,13 +41,13 @@ public class CardSetFunctions {
 			
 		}else {
 			
-			return convertToCardSetWithoutDialog(width, height, file.listFiles(), size);
+			convertToCardSetWithoutDialog(width, height, file.listFiles(), size);
 			
 		}
 		
 	}
 	
-	public static String convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
+	public static void convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
 		
 		if (size % 2 != 0) {
 			
@@ -89,14 +89,14 @@ public class CardSetFunctions {
 				
 				if (!image.isError()) {
 					
-					if (f.getName().contains("background") || f.getName().contains("back")) {
+					if (f.getName().toLowerCase().contains("background") || f.getName().toLowerCase().contains("back")) {
 						
-						background[0] = image/*new Image(new FileInputStream(f))*/;
+						background[0] = image;
 
 						
 					} else {
 						
-						images.add(image/*new Image(new FileInputStream(f))*/);
+						images.add(image);
 						
 					}
 					
@@ -120,14 +120,14 @@ public class CardSetFunctions {
 			alert.show();
 			throw ex[0];
 			
-		}else if (counter[0] == 0) {
+		} if (counter[0] == 0) {
 			
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("No Files provided are images");
 			alert.show();
 			throw new IllegalStateException("No Files provided are images");
 			
-		}else if (Math.pow(size,2) / 2 != images.size()) {
+		} if (Math.pow(size,2) / 2 != images.size()) {
 			
 			
 			images.removeIf(Image::isError);
@@ -137,7 +137,7 @@ public class CardSetFunctions {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setContentText("Not Enough images provided");
 				alert.show();
-				return null;
+				return;
 				
 			}else {
 				
@@ -147,7 +147,7 @@ public class CardSetFunctions {
 				
 			}
 			
-		} else if (background[0] == null) {
+		} if (background[0] == null) {
 			
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
@@ -156,7 +156,7 @@ public class CardSetFunctions {
 			
 		}
 		
-		int i = 1;
+		int i = 0;
 		String s;
 		Stage stage = new Stage();
 		TextField field = new TextField();
@@ -182,7 +182,7 @@ public class CardSetFunctions {
 		
 		if(new File("src/main/resources/com/example/maemory/CardSets/"+s+"/").mkdir()) {
 			
-			Files.move(Path.of(background[0].getUrl().replace("file:/", "")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/background.jpg"), StandardCopyOption.ATOMIC_MOVE);
+			Files.move(Path.of(background[0].getUrl().replace("file:/", "").replace("%20", " ")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/background.jpg"), StandardCopyOption.ATOMIC_MOVE);
 			
 			for (Image image : images) {
 				
@@ -190,8 +190,6 @@ public class CardSetFunctions {
 				i++;
 				
 			}
-			
-			return "src/main/resources/com/example/maemory/CardSets/"+s;
 			
 		}else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -203,8 +201,9 @@ public class CardSetFunctions {
 		
 	}
 	
-	public static String showCardSetSelectionDialog () throws Exception {
+	public static String showCardSetSelectionDialog (int size) {
 		
+		final boolean[] newSet = {false};
 		final String[] path = new String[1];
 		final ArrayList<Button> buttons = new ArrayList<>();
 		Stage stage = new Stage();
@@ -221,14 +220,23 @@ public class CardSetFunctions {
 		hBox.setSpacing(10);
 		add_new_set.setOnAction((q) -> {
 			try {
-				convertToCardSetWithDialog(100,100,4);
+				convertToCardSetWithDialog(100,100,size);
+				newSet[0] = true;
+				stage.close();
 			} catch (Exception e) {
-				System.err.println(e.getMessage());
+				e.printStackTrace();
 			}
 		});
 		confirm.setOnAction((a) -> stage.close());
 		
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
+			
+			if (Objects.requireNonNull(file.listFiles()).length == 0) {
+				if(!file.delete()) {
+					continue;
+				}
+				continue;
+			}
 			
 			ImageView imageView = new ImageView();
 			Button select = new Button("select "+file.getName());
@@ -237,7 +245,11 @@ public class CardSetFunctions {
 			
 			imageBox.setSpacing(5);
 			hBox.getChildren().add(imageBox);
-			imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(),100,100,false,false));
+			try {
+				imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(),100,100,false,false));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
 			
 			select.setOnAction((q) -> {
 			
@@ -257,7 +269,13 @@ public class CardSetFunctions {
 		
 		stage.showAndWait();
 		
-		return path[0];
+		if (newSet[0]) {
+			
+			return showCardSetSelectionDialog(size);
+		}else {
+			return path[0];
+		}
+		
 	
 	}
 	
