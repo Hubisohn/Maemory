@@ -169,6 +169,7 @@ public class CardSetFunctions {
 		borderpane.setBottom(button);
 		button.setOnAction((a) -> stage.close());
 		vBox.setSpacing(15);
+		vBox.setAlignment(Pos.CENTER);
 		field.setPromptText("name of the new CardSet");
 		stage.setScene(scene);
 		stage.setTitle("name of the new CardSet");
