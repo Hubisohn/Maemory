@@ -1,6 +1,8 @@
 package com.example.maemory;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.scene.layout.*;
 import javafx.stage.*;
 import java.io.*;
 import java.net.*;
@@ -10,7 +12,7 @@ import java.util.stream.*;
 
 public class CardSetFunctions {
 	
-	public static ArrayList<Spielkarte> convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception{
+	public static boolean convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception{
 		
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -42,7 +44,7 @@ public class CardSetFunctions {
 		
 	}
 	
-	public static ArrayList<Spielkarte> convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
+	public static boolean convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
 		
 		if ((width != null && height != null) && (width <= 0 || height <= 0)) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -123,7 +125,7 @@ public class CardSetFunctions {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("Not Enough images provided");
 			alert.show();
-			throw new IllegalStateException("Not Enough images provided");
+			return false;
 			
 		} else if (background[0] == null) {
 			
@@ -134,18 +136,44 @@ public class CardSetFunctions {
 			
 		}
 		
-		images.forEach((i) -> spielkartes.add(new Spielkarte(i,background[0])));
+		int i = 0;
+		String s;
+		Stage stage = new Stage();
+		TextField field = new TextField();
+		Scene scene = new Scene(new VBox(new Label("please type the name of the new CardSet"),field));
+		field.setPromptText("name of the new CardSet");
+		stage.setScene(scene);
+		stage.setTitle("name of the new CardSet");
+		stage.showAndWait();
 		
-		return spielkartes;
+		if (Objects.equals(field.getText(), "")) {
+			
+			s = "new Set";
+			
+		}else {
+		
+			s = field.getText();
+			
+		}
+		
+		Files.move(Path.of(background[0].getUrl()), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/background.jpg"));
+		
+		for (Image image: images) {
+			
+			System.out.println(Arrays.toString(image.getUrl().split("/")));
+			
+			Files.move(Path.of(image.getUrl()), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/"+i+".jpg"));
+			
+		}
+		
+		return true;
 		
 		
 	}
 	
-	public void showCarSetSelectionDialog () {
+	public String showCarSetSelectionDialog () {
 	
-	
-		
-	
+		return "";
 	
 	}
 	
