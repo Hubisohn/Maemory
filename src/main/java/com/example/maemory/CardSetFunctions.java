@@ -223,11 +223,12 @@ public class CardSetFunctions {
 			hBox.getChildren().add(imageBox);
 			imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(),100,100,false,false));
 			
-			for (File image: Objects.requireNonNull(file.listFiles())) {
+			button.setOnAction((q) -> {
 			
 			
 			
-			}
+			
+			});
 			
 		}
 		
