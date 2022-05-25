@@ -203,7 +203,7 @@ public class CardSetFunctions {
 		
 	}
 	
-	public static String showCarSetSelectionDialog () throws Exception {
+	public static String showCardSetSelectionDialog () throws Exception {
 		
 		final String[] path = new String[1];
 		final ArrayList<Button> buttons = new ArrayList<>();
