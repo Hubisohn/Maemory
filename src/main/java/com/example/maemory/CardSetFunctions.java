@@ -1,11 +1,12 @@
 package com.example.maemory;
-import javafx.geometry.*;
+
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.stage.*;
+
 import java.io.*;
 import java.net.*;
 import java.nio.file.*;
