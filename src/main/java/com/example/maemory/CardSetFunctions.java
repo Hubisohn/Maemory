@@ -218,8 +218,9 @@ public class CardSetFunctions {
 		
 		stage.setScene(scene);
 		vBox.setSpacing(15);
-		vBox.setAlignment(Pos.valueOf("CENTER"));
+		vBox.setAlignment(Pos.CENTER);
 		hBox.setSpacing(15);
+		hBox.setAlignment(Pos.CENTER);
 		add_new_set.setOnAction((q) -> {
 			try {
 				convertToCardSetWithDialog(100,100,size);
