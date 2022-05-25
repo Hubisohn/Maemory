@@ -1,5 +1,6 @@
 package com.example.maemory;
 
+import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -162,9 +163,9 @@ public class CardSetFunctions {
 		TextField field = new TextField();
 		Button button = new Button("OK");
 		VBox vBox = new VBox(new Label("please type the name of the new CardSet"),field,button);
-		Scene scene = new Scene(vBox);
+		Scene scene = new Scene(vBox,240,120);
 		button.setOnAction((a) -> stage.close());
-		vBox.setSpacing(10);
+		vBox.setSpacing(15);
 		field.setPromptText("name of the new CardSet");
 		stage.setScene(scene);
 		stage.setTitle("name of the new CardSet");
@@ -216,8 +217,9 @@ public class CardSetFunctions {
 		Scene scene = new Scene(pane);
 		
 		stage.setScene(scene);
-		vBox.setSpacing(10);
-		hBox.setSpacing(10);
+		vBox.setSpacing(15);
+		vBox.setAlignment(Pos.valueOf("CENTER"));
+		hBox.setSpacing(15);
 		add_new_set.setOnAction((q) -> {
 			try {
 				convertToCardSetWithDialog(100,100,size);

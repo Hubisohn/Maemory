@@ -9,7 +9,7 @@ public class MainAppController {
     @FXML
     protected void onHelloButtonClick() throws Exception {
     
-        CardSetFunctions.showCardSetSelectionDialog();
+        CardSetFunctions.showCardSetSelectionDialog(4);
         //CardSetFunctions.convertToCardSetWithDialog(100,100,4);
     }
 }
