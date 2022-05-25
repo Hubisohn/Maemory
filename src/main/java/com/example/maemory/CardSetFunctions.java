@@ -217,11 +217,7 @@ public class CardSetFunctions {
 				System.err.println(e.getMessage());
 			}
 		});
-		confirm.setOnAction((a) -> {
-			
-			stage.close();
-			
-		});
+		confirm.setOnAction((a) -> stage.close());
 		
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
