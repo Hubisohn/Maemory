@@ -12,7 +12,7 @@ public class MainAppController {
     @FXML
     protected void onHelloButtonClick() throws Exception {
         CardSetFunctions.convertToCardSetWithDialog(100,100,3);
-        int delay = 500;
+        CardSetFunctions.showCarSetSelectionDialog();
         
     }
 }

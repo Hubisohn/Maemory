@@ -119,7 +119,7 @@ public class CardSetFunctions {
 			alert.show();
 			throw new IllegalStateException("No Files provided are images");
 			
-		}else if (Math.pow(size, 2) != images.size()) {
+		}else if (Math.pow(size,2) / 2 != images.size()) {
 			
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("Not Enough images provided");
@@ -135,7 +135,7 @@ public class CardSetFunctions {
 			
 		}
 		
-		int i = 0;
+		int i = 1;
 		String s;
 		Stage stage = new Stage();
 		TextField field = new TextField();
@@ -165,18 +165,56 @@ public class CardSetFunctions {
 		
 		for (Image image: images) {
 			
-			System.out.println(Arrays.toString(image.getUrl().split("/")));
-			Files.move(Path.of(image.getUrl().replace("file:/", "")), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/"+i+".jpg"));
+			Files.move(Path.of(image.getUrl().replace("file:/", "").replace("%20"," ")), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/"+i+".jpg"));
+			i++;
 			
 		}
 		
 		return "src/main/resources/com/example/maemory/CardSets/"+s;
 		
-		
 	}
 	
-	public String showCarSetSelectionDialog () {
+	public static String showCarSetSelectionDialog () throws Exception {
 	
+		Stage stage = new Stage();
+		HBox hBox = new HBox();
+		Button button = new Button("add new Set");
+		VBox vBox = new VBox(hBox,button);
+		BorderPane pane = new BorderPane();
+		pane.setCenter(vBox);
+		Scene scene = new Scene(pane);
+		
+		stage.setScene(scene);
+		vBox.setSpacing(10);
+		hBox.setSpacing(10);
+		button.setOnAction((q) -> {
+			try {
+				convertToCardSetWithDialog(100,100,4);
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			}
+		});
+		
+		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
+			
+			ImageView imageView = new ImageView();
+			Button select = new Button("select"+file.getName());
+			VBox imageBox = new VBox(imageView,select);
+			
+			imageBox.setSpacing(5);
+			hBox.getChildren().add(imageBox);
+			imageView.setImage(new Image(new FileInputStream(Objects.requireNonNull(file.listFiles())[0])));
+			
+			for (File image: Objects.requireNonNull(file.listFiles())) {
+			
+			
+			
+			}
+			
+		}
+		
+		stage.show();
+		
 		return "";
 	
 	}
