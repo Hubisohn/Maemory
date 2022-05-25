@@ -139,7 +139,11 @@ public class CardSetFunctions {
 		String s;
 		Stage stage = new Stage();
 		TextField field = new TextField();
-		Scene scene = new Scene(new VBox(new Label("please type the name of the new CardSet"),field));
+		Button button = new Button("OK");
+		VBox vBox = new VBox(new Label("please type the name of the new CardSet"),field,button);
+		Scene scene = new Scene(vBox);
+		button.setOnAction((a) -> stage.close());
+		vBox.setSpacing(10);
 		field.setPromptText("name of the new CardSet");
 		stage.setScene(scene);
 		stage.setTitle("name of the new CardSet");
@@ -155,13 +159,14 @@ public class CardSetFunctions {
 			
 		}
 		
-		Files.move(Path.of(background[0].getUrl()), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/background.jpg"));
+		new File("src/main/resources/com/example/maemory/CardSets/"+s+"/").mkdir();
+		
+		Files.move(Path.of(background[0].getUrl().replace("file:/", "")), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/background.jpg"),StandardCopyOption.ATOMIC_MOVE);
 		
 		for (Image image: images) {
 			
 			System.out.println(Arrays.toString(image.getUrl().split("/")));
-			
-			Files.move(Path.of(image.getUrl()), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/"+i+".jpg"));
+			Files.move(Path.of(image.getUrl().replace("file:/", "")), Path.of("src/main/resources/com/example/maemory/CardSets/"+s+"/"+i+".jpg"));
 			
 		}
 		
