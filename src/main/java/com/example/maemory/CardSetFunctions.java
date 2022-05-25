@@ -221,7 +221,7 @@ public class CardSetFunctions {
 			
 			imageBox.setSpacing(5);
 			hBox.getChildren().add(imageBox);
-			imageView.setImage(new Image(file.toURI().toURL().toString(),100,100,false,false));
+			imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(),100,100,false,false));
 			
 			for (File image: Objects.requireNonNull(file.listFiles())) {
 			
