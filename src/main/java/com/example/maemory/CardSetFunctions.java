@@ -268,8 +268,7 @@ public class CardSetFunctions {
 					if (!file.delete()) {
 						System.err.println("could not delete directory");
 					}
- 				
-					continue;
+
 				}
 				
 				Alert alert = new Alert(Alert.AlertType.WARNING);
