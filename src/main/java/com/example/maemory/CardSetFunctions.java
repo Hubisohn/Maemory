@@ -12,7 +12,7 @@ import java.util.stream.*;
 
 public class CardSetFunctions {
 	
-	public static boolean convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception{
+	public static String convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception{
 		
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -44,7 +44,7 @@ public class CardSetFunctions {
 		
 	}
 	
-	public static boolean convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
+	public static String convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
 		
 		if ((width != null && height != null) && (width <= 0 || height <= 0)) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -53,7 +53,6 @@ public class CardSetFunctions {
 			throw new IllegalStateException("width and height must be greater than 0");
 		}
 
-		ArrayList<Spielkarte> spielkartes = new ArrayList<>();
 		ArrayList<Image> images = new ArrayList<>();
 		final Image[] background = {null};
 		final Exception[] ex = {null};
@@ -125,7 +124,7 @@ public class CardSetFunctions {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("Not Enough images provided");
 			alert.show();
-			return false;
+			return null;
 			
 		} else if (background[0] == null) {
 			
@@ -166,7 +165,7 @@ public class CardSetFunctions {
 			
 		}
 		
-		return true;
+		return "src/main/resources/com/example/maemory/CardSets/"+s;
 		
 		
 	}
