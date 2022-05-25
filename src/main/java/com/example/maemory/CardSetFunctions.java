@@ -217,6 +217,11 @@ public class CardSetFunctions {
 				System.err.println(e.getMessage());
 			}
 		});
+		confirm.setOnAction((a) -> {
+			
+			stage.close();
+			
+		});
 		
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
@@ -245,9 +250,9 @@ public class CardSetFunctions {
 			
 		}
 		
-		stage.show();
+		stage.showAndWait();
 		
-		return "";
+		return path[0];
 	
 	}
 	
