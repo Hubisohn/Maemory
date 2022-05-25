@@ -188,11 +188,11 @@ public class CardSetFunctions {
 		
 		if(new File("src/main/resources/com/example/maemory/CardSets/"+s+"/").mkdir()) {
 			
-			Files.move(Path.of(background[0].getUrl().replace("file:/", "").replace("%20", " ")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/background.jpg"), StandardCopyOption.ATOMIC_MOVE);
+			Files.copy(Path.of(background[0].getUrl().replace("file:/", "").replace("%20", " ")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/background.jpg"), StandardCopyOption.ATOMIC_MOVE);
 			
 			for (Image image : images) {
 				
-				Files.move(Path.of(image.getUrl().replace("file:/", "").replace("%20", " ")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/" + i + ".jpg"));
+				Files.copy(Path.of(image.getUrl().replace("file:/", "").replace("%20", " ")), Path.of("src/main/resources/com/example/maemory/CardSets/" + s + "/" + i + ".jpg"));
 				i++;
 				
 			}
@@ -260,7 +260,7 @@ public class CardSetFunctions {
 				alert.setWidth(120);
 				alert.setResizable(true);
 				alert.showAndWait();
-				System.err.println("deleted invalid sets");
+				System.err.println("deleted invalid Sets");
 				
 				if(!file.delete()) {
 					
