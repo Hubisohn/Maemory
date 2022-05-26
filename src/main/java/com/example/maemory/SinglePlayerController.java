@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,20 +30,24 @@ public class SinglePlayerController implements Initializable {
     GridPane spielfeld;
     ArrayList<Spielkarte> cardsOpened = new ArrayList<>();
     Image background = null;
-    private SimpleIntegerProperty points[] = new SimpleIntegerProperty[2];
-    private int activePlayer = 1;
     private boolean turn = true;
-    private int remainingCards;
     private ArrayList<Spielkarte> knownCards = new ArrayList<>();
+    private int level;
+
+
+    //4x4 6x6 8x8
+    //Leicht = 12,5%
+    //Mittel = 25%
+    //Schwer = 50%
+    //Legendär = Merkt sich alle Karten
+
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        points[0] = new SimpleIntegerProperty(0);
-        points[1] = new SimpleIntegerProperty(0);
-        start(8);
+        start(4, 25);
         spielfeld.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            System.out.println("Test");
             if (turn) {
                 if (cardsOpened.size() < 2) {
                     ImageView imageView = (ImageView) mouseEvent.getTarget();
@@ -64,16 +69,20 @@ public class SinglePlayerController implements Initializable {
 
     private void karteAufdecken(ImageView imageView) {
         Spielkarte x = (Spielkarte) feld.get(spielfeld.getChildren().indexOf(imageView));
+        //Test fehler
+        System.out.println(x.getIndex() + "  " + x.getVorderseiteID());
         imageView.setImage(x.getVorderseite());
-        System.out.println("KArte umgedreht");
         cardsOpened.add(x);
         if (!knownCards.contains(x)) {
             knownCards.add(x);
+            if(knownCards.size() > level){
+                knownCards.remove(0);
+            }
         }
+        System.out.println(knownCards);
     }
 
     public void autoPlay() {
-        System.out.println("Autoplay");
         for (int i = 0; i < knownCards.size(); i++) {
             for (int j = i + 1; j < knownCards.size(); j++) {
                 if (knownCards.get(i).getVorderseiteID() == knownCards.get(j).getVorderseiteID()) {
@@ -103,36 +112,27 @@ public class SinglePlayerController implements Initializable {
         }
         do {
             randomIndex = random.nextInt(feld.size());
-        } while (feld.get(randomIndex) == null);
+        } while (feld.get(randomIndex) == null || cardsOpened.get(0).getIndex() == randomIndex);
         karteAufdecken((ImageView) spielfeld.getChildren().get(randomIndex));
-        System.out.println("Vor Timeline");
         Platform.runLater(() -> {
             timeline.play();
         });
-        System.out.println("Nach Timeline");
     }
 
 
-    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2.4), new EventHandler<ActionEvent>() {
 
         @Override
         public void handle(ActionEvent actionEvent) {
-            System.out.println("Timeline");
-            System.out.println(cardsOpened.size());
             if (cardsOpened.size() >= 2) {
-                System.out.println(timeline.getStatus());
                 check();
-                System.out.println(timeline.getStatus());
                 timeline.stop();
-                System.out.println(timeline.getStatus());
             }
         }
     }));
 
 
     private synchronized void check() {
-        System.out.println(cardsOpened.get(0));
-        System.out.println(cardsOpened.get(1));
         if (cardsOpened.get(0).getVorderseiteID() == cardsOpened.get(1).getVorderseiteID()) {
             spielfeld.getChildren().get(cardsOpened.get(0).getIndex()).setVisible(false);
             spielfeld.getChildren().get(cardsOpened.get(1).getIndex()).setVisible(false);
@@ -140,15 +140,13 @@ public class SinglePlayerController implements Initializable {
             feld.put(cardsOpened.get(1).getIndex(), null);
             knownCards.remove(cardsOpened.get(0));
             knownCards.remove(cardsOpened.get(1));
-            points[activePlayer].setValue(points[activePlayer].getValue() + 10);
-            remainingCards -= 2;
-            if (remainingCards == 0) {
-                if (points[0].getValue() > points[1].getValue()) {
-                    box.setBottom(new Label("Player 1 wins!"));
-                } else if (points[0].getValue() < points[1].getValue()) {
-                    box.setBottom(new Label("Player 2 wins!"));
-                } else {
-                    box.setBottom(new Label("Draw!"));
+            for (int i = 0; i < feld.size(); i++) {
+                if (feld.get(i) != null) {
+                    break;
+                }
+                if(i == feld.size() - 1){
+                    gameOver();
+                    return;
                 }
             }
             if (!turn) {
@@ -158,11 +156,6 @@ public class SinglePlayerController implements Initializable {
         } else {
             ((ImageView) spielfeld.getChildren().get(cardsOpened.get(1).getIndex())).setImage(background);
             ((ImageView) spielfeld.getChildren().get(cardsOpened.get(0).getIndex())).setImage(background);
-            if (activePlayer == 0) {
-                activePlayer = 1;
-            } else {
-                activePlayer = 0;
-            }
             if (turn) {
                 turn = false;
                 cardsOpened.clear();
@@ -174,9 +167,15 @@ public class SinglePlayerController implements Initializable {
         if(turn) cardsOpened.clear();
     }
 
-    //4x4 6x6 8x8
-    void start(int size) {
-        remainingCards = size * size;
+    private void gameOver() {
+        System.out.println("Game Over");
+    }
+
+
+
+    void start(int size, double difficulty) {
+        level = (int) ((Math.pow(size,2) / 100) * difficulty);
+        System.out.println(level);
         //Hintergrund
         try {
             background = new Image(new FileInputStream("src/main/resources/Images/Hintergrund.jpg"));
@@ -213,16 +212,6 @@ public class SinglePlayerController implements Initializable {
             }
         }
         box.setCenter(spielfeld);
-
-        //Counter
-        Label counter1 = new Label("0");
-        Label counter2 = new Label("0");
-        counter1.textProperty().bind(points[0].asString());
-        counter2.textProperty().bind(points[1].asString());
-        counter1.setStyle("-fx-font-size: 30px; -fx-text-fill: #ff0000;");
-        counter2.setStyle("-fx-font-size: 30px; -fx-text-fill: #ff0000;");
-        box.setBottom(counter2);
-        box.setTop(counter1);
     }
 
 }
