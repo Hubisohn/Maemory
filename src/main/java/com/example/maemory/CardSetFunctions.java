@@ -226,6 +226,11 @@ public class CardSetFunctions {
 		
 	}
 	
+	/**
+	 *
+	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size*size) / 2
+	 * @return The Path to the directory where the CardSet is located
+	 */
 	public static String showCardSetSelectionDialog (int size) {
 		
 		final boolean[] newSet = {false};
