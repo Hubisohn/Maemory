@@ -7,7 +7,7 @@ public class MainAppController {
     public ImageView back;
     
     @FXML
-    protected void onHelloButtonClick() throws Exception {
+    protected void onHelloButtonClick() {
     
         CardSetFunctions.showCardSetSelectionDialog(4);
         //CardSetFunctions.convertToCardSetWithDialog(100,100,4);
