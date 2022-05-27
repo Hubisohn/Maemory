@@ -16,7 +16,17 @@ import java.util.stream.*;
 
 public class CardSetFunctions {
 	
-	public static void convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception{
+	
+	/**
+	 * This function converts a directory filled with image files into a CardSet that is used in the game.
+	 * Important is that at least one image must contain "background" or "back" in its filename, it will be used as the back of all cards the Set.
+	 * Note that the images used for creating the set will be chosen via a dialog.
+	 * @param width the width all images will have after conversion
+	 * @param height the height all images will have after conversion
+	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size*size) / 2
+	 * @throws Exception if anything goes wrong during the conversion process an Exception will be thrown
+	 */
+	public static void convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception {
 		
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -48,6 +58,15 @@ public class CardSetFunctions {
 		
 	}
 	
+	/**
+	 * This function converts a directory filled with image files into a CardSet that is used in the game.
+	 * Important is that at least one image must contain "background" or "back" in its filename, it will be used as the back of all cards the Set.
+	 * @param width the width all images will have after conversion
+	 * @param height the height all images will have after conversion
+	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size*size) / 2
+	 * @param files an array of images wich are to be used as Cards in the Set
+	 * @throws Exception if anything goes wrong during the conversion process an Exception will be thrown
+	 */
 	public static void convertToCardSetWithoutDialog(final Integer width, final Integer height, File[] files, Integer size) throws Exception {
 		
 		if (size % 2 != 0) {
