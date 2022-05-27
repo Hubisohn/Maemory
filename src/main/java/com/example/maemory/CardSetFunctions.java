@@ -256,10 +256,34 @@ public class CardSetFunctions {
 		
 		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
+			if (!Objects.requireNonNull(file.listFiles())[0].getName().equals("0.jpg")) {
+				
+				int i = 0;
+				
+				for (File image : Objects.requireNonNull(file.listFiles())) {
+					
+					
+					if (!image.getName().equals("background.jpg")) {
+						
+						try {
+							Files.move(Path.of(image.toURI()),Path.of(image.getPath().replace(image.getName(),i+".jpg")),StandardCopyOption.REPLACE_EXISTING);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+					}
+					
+					i++;
+					
+				}
+				
+				
+			}
+			
 			if (Objects.requireNonNull(file.listFiles()).length < 9) {
 				
 				Alert alert = new Alert(Alert.AlertType.WARNING);
-				alert.setContentText("an invalid Set consisting of only " + Objects.requireNonNull(file.listFiles()).length + " images has been found.\nthe minimum number of images required is 9. It will be deleted.");
+				alert.setContentText("an invalid Set, named "+file.getName()+" consisting of only " + Objects.requireNonNull(file.listFiles()).length + " images has been found.\nthe minimum number of images required is 9. It will be deleted.");
 				alert.setWidth(120);
 				alert.setResizable(true);
 				alert.showAndWait();
