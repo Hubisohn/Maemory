@@ -31,7 +31,9 @@ public class CardSetFunctions {
 		DirectoryChooser chooser = new DirectoryChooser();
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setHeaderText("Important!");
-		alert.setContentText("The directory you select must contain an amount of image files equal to at least "+ (int) ((Math.pow(size, 2) / 2) + 1) +".\nThe image to be used as the back of every card must contain \"back\" or \"background\" in its filename, the filenames of the other images do not matter.");
+		alert.setContentText("The directory you select must contain an amount of image files equal to at least " + (int) ((Math.pow(size, 2) / 2) + 1) + ".\nThe image to be used as the back of every card must contain \"back\" or \"background\" in its filename, the filenames of the other images do not matter.");
+		alert.setWidth(alert.getWidth() + 400);
+		alert.setHeight(alert.getHeight() + 100);
 		alert.showAndWait();
 		chooser.setTitle("choose directory with images");
 		File file = chooser.showDialog(null);
@@ -171,6 +173,8 @@ public class CardSetFunctions {
 			
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setContentText("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
+			alert.setWidth(alert.getWidth() + 400);
+			alert.setHeight(alert.getHeight() + 100);
 			alert.show();
 			throw new IllegalArgumentException("there has to be at least one picture to be used as a back for the cards, this picture must contain \"back\" or \"background\" in its filename");
 			
@@ -184,7 +188,7 @@ public class CardSetFunctions {
 		VBox vBox = new VBox(new Label("please type the name of the new CardSet"),field);
 		BorderPane borderpane = new BorderPane();
 		Scene scene = new Scene(borderpane,240,120);
-		borderpane.setTop(new Label("please type the name of the new CardSet"));
+		//borderpane.setTop(new Label("please type the name of the new CardSet"));
 		borderpane.setCenter(vBox);
 		borderpane.setBottom(button);
 		button.setOnAction((a) -> stage.close());
@@ -241,9 +245,10 @@ public class CardSetFunctions {
 		Button add_new_set = new Button("Add new Set");
 		Button confirm = new Button("Confirm");
 		Button abort = new Button("Abort");
-		HBox buttonBox = new HBox(add_new_set,abort,confirm);
+		Button deleteSet = new Button("Delete Set");
+		HBox buttonBox = new HBox(deleteSet, add_new_set, abort, confirm);
 		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane,350,220);
+		Scene scene = new Scene(pane, 350, 220);
 		
 		stage.setMinHeight(220);
 		stage.setMinWidth(350);
@@ -268,7 +273,7 @@ public class CardSetFunctions {
 			
 			if (!Objects.equals(path[0], "")) {
 				stage.close();
-			}else {
+			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setContentText("No Set selected");
 				alert.show();
@@ -277,38 +282,45 @@ public class CardSetFunctions {
 			
 		});
 		abort.setOnAction((q) -> stage.close());
-		
-		for (File file: Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
+		deleteSet.setOnAction((q) -> {
 			
-			if (!Objects.requireNonNull(file.listFiles())[0].getName().equals("0.jpg")) {
+			if (Objects.equals(path[0], "")) {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setContentText("no File selected");
+				alert.showAndWait();
+			} else {
 				
-				int i = 0;
-				
-				for (File image : Objects.requireNonNull(file.listFiles())) {
+				for (File file : Objects.requireNonNull(new File(path[0]).listFiles())) {
 					
-					
-					if (!image.getName().equals("background.jpg")) {
-						
-						try {
-							Files.move(Path.of(image.toURI()),Path.of(image.getPath().replace(image.getName(),i+".jpg")),StandardCopyOption.REPLACE_EXISTING);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						
+					if (!file.delete()) {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setContentText("unable to delete File");
+						alert.showAndWait();
 					}
-					
-					i++;
 					
 				}
 				
+				if (!new File(path[0]).delete()) {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText("unable to delete Directory");
+					alert.showAndWait();
+				}
+				
+				newSet[0] = true;
+				stage.close();
 				
 			}
+			
+		});
+		
+		for (File file : Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
 			
 			if (Objects.requireNonNull(file.listFiles()).length < 9) {
 				
 				Alert alert = new Alert(Alert.AlertType.WARNING);
-				alert.setContentText("an invalid Set, named "+file.getName()+" consisting of only " + Objects.requireNonNull(file.listFiles()).length + " images has been found.\nthe minimum number of images required is 9. It will be deleted.");
-				alert.setWidth(120);
+				alert.setContentText("an invalid Set, named " + file.getName() + " consisting of only " + Objects.requireNonNull(file.listFiles()).length + " images has been found.\nthe minimum number of images required is 9. It will be deleted.");
+				alert.setWidth(alert.getWidth() + 400);
+				alert.setHeight(alert.getHeight() + 100);
 				alert.setResizable(true);
 				alert.showAndWait();
 				System.err.println("deleted directory " + file.getName());
@@ -332,7 +344,31 @@ public class CardSetFunctions {
 				continue;
 			}
 			
-			if (Objects.requireNonNull(file.listFiles()).length >= Math.pow(size,2) / 2  + 1) {
+			if (!Objects.requireNonNull(file.listFiles())[0].getName().equals("0.jpg")) {
+				
+				int i = 0;
+				
+				for (File image : Objects.requireNonNull(file.listFiles())) {
+					
+					
+					if (!image.getName().equals("background.jpg")) {
+						
+						try {
+							Files.move(Path.of(image.toURI()), Path.of(image.getPath().replace(image.getName(), i + ".jpg")), StandardCopyOption.REPLACE_EXISTING);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+					}
+					
+					i++;
+					
+				}
+				
+				
+			}
+			
+			if (Objects.requireNonNull(file.listFiles()).length >= Math.pow(size, 2) / 2 + 1) {
 				
 				ImageView imageView = new ImageView();
 				Button select = new Button("select " + file.getName());
@@ -365,13 +401,30 @@ public class CardSetFunctions {
 			}
 			
 		}
+		
+		if (hBox.getChildren().size() == 0) {
 			
+			
+			if (Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles()).length == 0) {
+				
+				hBox.getChildren().add(new Label("No card sets exist."));
+				
+			} else {
+				
+				hBox.getChildren().add(new Label("No card sets have enough cards to play with this size of playing field."));
+				
+			}
+			
+			
+		}
+		
 		stage.showAndWait();
 		
 		if (newSet[0]) {
 			
 			return showCardSetSelectionDialog(size);
-		}else {
+			
+		} else {
 			return path[0];
 		}
 		
