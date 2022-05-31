@@ -23,7 +23,7 @@ public class CardSetFunctions {
 	 * Note that the images used for creating the set will be chosen via a dialog.
 	 * @param width the width all images will have after conversion
 	 * @param height the height all images will have after conversion
-	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size*size) / 2
+	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size^2) / 2
 	 * @throws Exception if anything goes wrong during the conversion process an Exception will be thrown
 	 */
 	public static void convertToCardSetWithDialog(Integer width, Integer height, Integer size) throws Exception {
@@ -63,7 +63,7 @@ public class CardSetFunctions {
 	 * Important is that at least one image must contain "background" or "back" in its filename, it will be used as the back of all cards the Set.
 	 * @param width the width all images will have after conversion
 	 * @param height the height all images will have after conversion
-	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size*size) / 2
+	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size^2) / 2
 	 * @param files an array of images wich are to be used as Cards in the Set
 	 * @throws Exception if anything goes wrong during the conversion process an Exception will be thrown
 	 */
@@ -228,7 +228,7 @@ public class CardSetFunctions {
 	
 	/**
 	 * this function show a window where the CardSet wich is to be used in the next game can be selected
-	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size*size) / 2
+	 * @param size the size wich this CardSet will have, the amount of cards contained in the set will be equal to (size^2) / 2
 	 * @return The Path to the directory where the CardSet is located
 	 */
 	public static String showCardSetSelectionDialog (Integer size) {
