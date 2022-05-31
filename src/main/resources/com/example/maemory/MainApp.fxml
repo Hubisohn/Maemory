@@ -8,16 +8,6 @@
 
         <VBox alignment="CENTER" spacing="10">
 
-            <MenuButton>
-
-                <items>
-
-                    <MenuItem text="123"/>
-
-                </items>
-
-            </MenuButton>
-
             <HBox alignment="CENTER" spacing="10">
 
                 <VBox spacing="10" alignment="CENTER">
