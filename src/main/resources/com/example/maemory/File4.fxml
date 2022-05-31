@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane style="-fx-background-image: startPicture" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.maemory.Controller1">
+   <center>
+       <Label text="Regeln/Hilfe zum Spiel Mämory:"></Label>
+       <Label text="Zum starten des Spiels muss man zwischen Singleplayer und Multiplayer wählen."></Label>
+       <Label text="->Singleplayer: Spiel gegen Computer. Schwierigkeitsgrad sowie Feldgröße kann vor Spielbeginn ausgewählt werden."></Label>
+       <Label text="->Multiplayer: Verbindung zum Spielpartner wird über Server aufgebaut. Person die einladet kannFeldgröße entscheiden."></Label>
+       <Label text="Bei Sieg eines Benutzers im Multiplayermodus als auch bei Sieg des Benutzers im Singleplaydermodus wird dieser in die Rangliste das sich im Hauptmenü befindet aufgelistet."></Label>
+       <Label text="Rangliste kann gespeichert (SaveResult) als auch geladen (LoadFile) werden."></Label>
+   </center>
+</BorderPane>

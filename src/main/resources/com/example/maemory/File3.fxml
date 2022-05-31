@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<BorderPane style="-fx-background-image: startPicture" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.maemory.Controller3">
+   <center>
+       <VBox alignment="CENTER" spacing="50">
+           <Label fx:id="textSize" text="Gamefield size" prefHeight="100" prefWidth="200"></Label>
+           <MenuButton fx:id="menuButton" minWidth="80" minHeight="50">
+               <items>
+                   <MenuItem text="Leicht" onAction="#leicht_Func"></MenuItem>
+                   <MenuItem text="Mittel" onAction="#mittel_Func"></MenuItem>
+                   <MenuItem text="Schwer" onAction="#schwer_Func"></MenuItem>
+                   <MenuItem text="Legendär" onAction="#legendaer_Func"></MenuItem>
+               </items>
+           </MenuButton>
+           <HBox alignment="CENTER" spacing="30">
+               <Button prefHeight="150" prefWidth="150" onAction="#vier" text="4X4" fx:id="viererButton"></Button>
+               <Button prefHeight="150" prefWidth="150" onAction="#sechs" text="6x6" fx:id="sechserButton"></Button>
+               <Button prefHeight="150" prefWidth="150" onAction="#acht" text="8x8" fx:id="achterButton"></Button>
+           </HBox>
+       </VBox>
+
+   </center>
+
+
+</BorderPane>
