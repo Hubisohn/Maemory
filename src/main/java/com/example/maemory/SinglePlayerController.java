@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -26,11 +27,14 @@ import java.util.*;
 
 public class SinglePlayerController implements Initializable {
     public BorderPane box;
+    public Label pointsPlayer;
+    public Label pointsComputer;
+    public GridPane spielfeld;
     HashMap<Integer, Spielkarte> feld = new HashMap<>();
-    GridPane spielfeld;
     ArrayList<Spielkarte> cardsOpened = new ArrayList<>();
     Image background = null;
-    private boolean turn = true;
+    private SimpleIntegerProperty[] points = new SimpleIntegerProperty[2];
+    private int player = 0;
     private ArrayList<Spielkarte> knownCards = new ArrayList<>();
     private int level;
 
@@ -46,9 +50,13 @@ public class SinglePlayerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        start(4, 25);
+        points[0] = new SimpleIntegerProperty(0);
+        points[1] = new SimpleIntegerProperty(0);
+        pointsPlayer.textProperty().bind(points[0].asString());
+        pointsComputer.textProperty().bind(points[1].asString());
+        start(6, 12.5);
         spielfeld.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            if (turn) {
+            if (player == 0) {
                 if (cardsOpened.size() < 2) {
                     ImageView imageView = (ImageView) mouseEvent.getTarget();
                     karteAufdecken(imageView);
@@ -140,6 +148,7 @@ public class SinglePlayerController implements Initializable {
             feld.put(cardsOpened.get(1).getIndex(), null);
             knownCards.remove(cardsOpened.get(0));
             knownCards.remove(cardsOpened.get(1));
+            points[player].setValue(points[player].getValue() + 10);
             for (int i = 0; i < feld.size(); i++) {
                 if (feld.get(i) != null) {
                     break;
@@ -149,26 +158,40 @@ public class SinglePlayerController implements Initializable {
                     return;
                 }
             }
-            if (!turn) {
+            if (player == 1) {
+
                 cardsOpened.clear();
                 autoPlay();
             }
         } else {
             ((ImageView) spielfeld.getChildren().get(cardsOpened.get(1).getIndex())).setImage(background);
             ((ImageView) spielfeld.getChildren().get(cardsOpened.get(0).getIndex())).setImage(background);
-            if (turn) {
-                turn = false;
+            if (player== 0) {
+                player = 1;
                 cardsOpened.clear();
                 autoPlay();
             } else {
-                turn = true;
+                player = 0;
             }
         }
-        if(turn) cardsOpened.clear();
+        if(player == 0) cardsOpened.clear();
     }
 
     private void gameOver() {
-        System.out.println("Game Over");
+        box.setLeft(null);
+        box.setRight(null);
+        box.setCenter(null);
+        Label label = new Label("");
+        label.setStyle("-fx-font-size: 50px; -fx-text-fill: #ff0000;");
+        if (points[0].getValue() > points[1].getValue()) {
+            label.setText("Spieler hat gewonnen!");
+        } else if (points[0].getValue() < points[1].getValue()) {
+            label.setText("Computer hat gewonnen!");
+        }
+        else {
+            label.setText("Unentschieden!");
+        }
+        box.setCenter(label);
     }
 
 
@@ -193,14 +216,11 @@ public class SinglePlayerController implements Initializable {
             motive.put(i, x);
         }
         int index = 0;
-        spielfeld = new GridPane();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 ImageView imageView = new ImageView(background);
-                imageView.setX(80);
-                imageView.setY(80);
-                imageView.setFitWidth(80);
-                imageView.setFitHeight(80);
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
                 spielfeld.add(imageView, j, i);
                 int y;
                 do {

@@ -9,6 +9,20 @@
 <BorderPane fx:id="box" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.maemory.SinglePlayerController"
-            prefHeight="400.0" prefWidth="600.0">
-
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../css/Gamefield.css">
+    <left>
+        <VBox styleClass="infos">
+            <Label styleClass="playerNames" text="Player"/>
+            <Label styleClass="points"  fx:id="pointsPlayer" text="0"/>
+        </VBox>
+    </left>
+    <center>
+        <GridPane fx:id="spielfeld"/>
+    </center>
+    <right>
+        <VBox styleClass="infos">
+            <Label styleClass="playerNames" text="Computer"/>
+            <Label styleClass="points"  fx:id="pointsComputer" text="0"/>
+        </VBox>
+    </right>
 </BorderPane>

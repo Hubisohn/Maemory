@@ -1,0 +1,22 @@
+#spielfeld {
+    -fx-alignment: center;
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+}
+
+
+.playerNames{
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+}
+
+.points{
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+}
+
+.infos {
+    -fx-alignment: center;
+    -fx-padding: 30px;
+    -fx-spacing: 10px;
+}
