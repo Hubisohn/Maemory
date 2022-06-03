@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<BorderPane fx:id="borderPane" maxHeight="300" maxWidth="300" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.maemory.Controller1">
-   <center>
-       <VBox alignment="CENTER" minWidth="300" minHeight="300" maxHeight="300" maxWidth="300">
-           <Label text="Regeln/Hilfe zum Spiel Mämory:"/>
-           <Label text="Zum starten des Spiels muss man zwischen Singleplayer und Multiplayer wählen."/>
-           <Label text="->Singleplayer: Spiel gegen Computer. Schwierigkeitsgrad sowie Feldgröße kann vor Spielbeginn ausgewählt werden."/>
-           <Label text="->Multiplayer: Verbindung zum Spielpartner wird über Server aufgebaut. Person die einladet kannFeldgröße entscheiden."/>
-           <Label text="Bei Sieg eines Benutzers im Multiplayermodus als auch bei Sieg des Benutzers im Singleplaydermodus wird dieser in die Rangliste das sich im Hauptmenü befindet aufgelistet."/>
-           <Label text="Rangliste kann gespeichert (SaveResult) als auch geladen (LoadFile) werden."/>
-       </VBox>
-   </center>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefWidth="500" prefHeight="500" xmlns="http://javafx.com/javafx/17"
+            fx:controller="com.example.maemory.Controller2">
+    <center>
+        <VBox>
+            <Label text="Regeln/Hilfe zum Spiel Mämory:"/>
+            <Label text="Zum starten des Spiels muss man zwischen Singleplayer und Multiplayer wählen."/>
+            <Label text="->Singleplayer: Spiel gegen Computer. Schwierigkeitsgrad sowie Feldgröße kann vor Spielbeginn ausgewählt werden."/>
+            <Label text="->Multiplayer: Verbindung zum Spielpartner wird über Server aufgebaut. Person die einladet kannFeldgröße entscheiden."/>
+            <Label text="Bei Sieg eines Benutzers im Multiplayermodus als auch bei Sieg des Benutzers im Singleplaydermodus wird dieser in die Rangliste das sich im Hauptmenü befindet aufgelistet."/>
+            <Label text="Rangliste kann gespeichert (SaveResult) als auch geladen (LoadFile) werden."/>
+        </VBox>
+    </center>
 </BorderPane>

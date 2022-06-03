@@ -1,30 +1,19 @@
 package com.example.maemory;
 
-import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
+import javafx.application.*;
+import javafx.collections.*;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.geometry.*;
+import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
-import javafx.stage.Stage;
-import javafx.util.Callback;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 
 import java.io.*;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.net.*;
+import java.util.*;
+import java.util.regex.*;
 
 public class Controller2 implements Initializable {
     public Button SaveResults;
@@ -135,9 +124,9 @@ public class Controller2 implements Initializable {
         Stage stage = new Stage();
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 150, 150);
+            scene = new Scene(fxmlLoader.load(), 500, 500);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         stage.setTitle("Rules for the game");
         stage.setScene(scene);
@@ -152,7 +141,9 @@ public class Controller2 implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tableView.setItems(users);
+        if (tableView != null) {
+            tableView.setItems(users);
+        }
     }
 
     public void saveDatei(ActionEvent actionEvent) {
