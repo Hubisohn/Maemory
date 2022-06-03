@@ -1,19 +1,14 @@
 package com.example.maemory;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.image.Image;
+import javafx.event.*;
+import javafx.fxml.*;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import javafx.scene.text.*;
+import javafx.stage.*;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.net.*;
+import java.util.*;
 
 public class Controller3 implements Initializable {
 
@@ -28,34 +23,34 @@ public class Controller3 implements Initializable {
 
     @FXML
     private BorderPane borderPane;
-
+    
     @FXML
     private Label textSize;
-
+    
     @FXML
     MenuButton menuButton;
-
-
+    
+    
     Stage stageOld;
-
-
+    
+    
+    String pfad;
+    
     public int vier(ActionEvent actionEvent) {
+        pfad = CardSetFunctions.showCardSetSelectionDialog(4);
         return 4;
     }
-
+    
     public int sechs(ActionEvent actionEvent) {
+        pfad = CardSetFunctions.showCardSetSelectionDialog(6);
         return 6;
-    }
-
-    public int acht(ActionEvent actionEvent) {
-        return 8;
     }
 
     public void setStageOld(Stage stage) {
         stageOld = stage;
     }
-
-
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         textSize.setFont(new Font(32));
@@ -63,10 +58,15 @@ public class Controller3 implements Initializable {
         sechserButton.setDisable(true);
         achterButton.setDisable(true);
     }
-
-
+    
+    
     double grad;
-
+    
+    public int acht(ActionEvent actionEvent) {
+        pfad = CardSetFunctions.showCardSetSelectionDialog(8);
+        return 8;
+    }
+    
     public void leicht_Func(ActionEvent actionEvent) {
         menuButton.setText("Leicht");
         grad = 12.5;
@@ -74,7 +74,7 @@ public class Controller3 implements Initializable {
         sechserButton.setDisable(false);
         achterButton.setDisable(false);
     }
-
+    
     public void mittel_Func(ActionEvent actionEvent) {
         menuButton.setText("Mittel");
         grad = 25.0;
