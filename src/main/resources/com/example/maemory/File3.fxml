@@ -21,10 +21,10 @@
            <Label fx:id="textSize" text="Gamefield size" prefHeight="100" prefWidth="200"></Label>
            <MenuButton fx:id="menuButton" minWidth="80" minHeight="50">
                <items>
-                   <MenuItem text="Leicht" onAction="#leicht_Func"></MenuItem>
-                   <MenuItem text="Mittel" onAction="#mittel_Func"></MenuItem>
-                   <MenuItem text="Schwer" onAction="#schwer_Func"></MenuItem>
-                   <MenuItem text="Legendär" onAction="#legendaer_Func"></MenuItem>
+                   <MenuItem text="Easy" onAction="#leicht_Func"></MenuItem>
+                   <MenuItem text="Medium" onAction="#mittel_Func"></MenuItem>
+                   <MenuItem text="Difficult" onAction="#schwer_Func"></MenuItem>
+                   <MenuItem text="Legendary" onAction="#legendaer_Func"></MenuItem>
                </items>
            </MenuButton>
            <HBox alignment="CENTER" spacing="30">

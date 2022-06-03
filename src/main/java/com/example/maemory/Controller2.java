@@ -139,12 +139,9 @@ public class Controller2 implements Initializable {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        stage.setTitle("Player name");
+        stage.setTitle("Rules for the game");
         stage.setScene(scene);
-        stage.setFullScreen(true);
         stage.show();
-
-
     }
 
     public void playerName(Controller1 controller) {
