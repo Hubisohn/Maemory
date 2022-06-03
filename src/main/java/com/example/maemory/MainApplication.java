@@ -1,11 +1,11 @@
 package com.example.maemory;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.application.*;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.stage.*;
 
-import java.io.IOException;
+import java.io.*;
 
 public class MainApplication extends Application {
     @Override
