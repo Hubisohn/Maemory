@@ -124,7 +124,7 @@ public class Controller2 implements Initializable {
         Stage stage = new Stage();
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 500, 500);
+            scene = new Scene(fxmlLoader.load(), 600, 300);
         } catch (IOException e) {
             e.printStackTrace();
         }
