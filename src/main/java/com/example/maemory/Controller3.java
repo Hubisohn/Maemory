@@ -34,16 +34,18 @@ public class Controller3 implements Initializable {
     Stage stageOld;
     
     
-    String pfad;
+    private String pfad;
+    private int size;
+    private double grad;
     
     public int vier(ActionEvent actionEvent) {
-        pfad = CardSetFunctions.showCardSetSelectionDialog(4);
+        if (Objects.equals(pfad = CardSetFunctions.showCardSetSelectionDialog(4), "abort")) {
+            
+            return 0;
+            
+        }
+        size = 4;
         return 4;
-    }
-    
-    public int sechs(ActionEvent actionEvent) {
-        pfad = CardSetFunctions.showCardSetSelectionDialog(6);
-        return 6;
     }
 
     public void setStageOld(Stage stage) {
@@ -59,11 +61,24 @@ public class Controller3 implements Initializable {
         achterButton.setDisable(true);
     }
     
-    
-    double grad;
+    public int sechs(ActionEvent actionEvent) {
+        if (Objects.equals(pfad = CardSetFunctions.showCardSetSelectionDialog(6), "abort")) {
+            
+            return 0;
+            
+        }
+        size = 6;
+        return 6;
+    }
     
     public int acht(ActionEvent actionEvent) {
-        pfad = CardSetFunctions.showCardSetSelectionDialog(8);
+        
+        if (Objects.equals(pfad = CardSetFunctions.showCardSetSelectionDialog(8), "abort")) {
+            
+            return 0;
+            
+        }
+        size = 8;
         return 8;
     }
     

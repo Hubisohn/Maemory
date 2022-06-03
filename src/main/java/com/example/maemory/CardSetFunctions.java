@@ -240,197 +240,220 @@ public class CardSetFunctions {
 	 */
 	public static String showCardSetSelectionDialog(Integer size) {
 		
-		final boolean[] newSet = {false};
-		final String[] path = new String[]{""};
-		final ArrayList<Button> buttons = new ArrayList<>();
-		Stage stage = new Stage();
-		HBox hBox = new HBox();
-		Button add_new_set = new Button("Add new Set");
-		Button confirm = new Button("Confirm");
-		Button abort = new Button("Abort");
-		Button deleteSet = new Button("Delete Set");
-		HBox buttonBox = new HBox(deleteSet, add_new_set, abort, confirm);
-		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane, 350, 220);
+		String pathtoSets = "src/main/resources/com/example/maemory/CardSets/";
 		
-		stage.setMinHeight(220);
-		stage.setMinWidth(350);
-		stage.setTitle("CardSets");
-		pane.setCenter(hBox);
-		pane.setBottom(buttonBox);
-		stage.setScene(scene);
-		hBox.setSpacing(15);
-		hBox.setAlignment(Pos.CENTER);
-		buttonBox.setSpacing(2);
-		buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
-		add_new_set.setOnAction((q) -> {
-			try {
-				convertToCardSetWithDialog(100, 100, size);
-				newSet[0] = true;
-				stage.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-		confirm.setOnAction((q) -> {
+		try {
 			
-			if (!Objects.equals(path[0], "")) {
-				stage.close();
-			} else {
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setContentText("No Set selected");
-				alert.show();
-				System.err.println("No Set selected");
-			}
+			final boolean[] newSet = {false};
+			final boolean[] abortBoolean = {false};
+			final String[] path = new String[]{""};
+			final ArrayList<Button> buttons = new ArrayList<>();
+			Stage stage = new Stage();
+			HBox hBox = new HBox();
+			Button add_new_set = new Button("Add new Set");
+			Button confirm = new Button("Confirm");
+			Button abort = new Button("Abort");
+			Button deleteSet = new Button("Delete Set");
+			HBox buttonBox = new HBox(deleteSet, add_new_set, abort, confirm);
+			BorderPane pane = new BorderPane();
+			Scene scene = new Scene(pane, 350, 220);
 			
-		});
-		abort.setOnAction((q) -> stage.close());
-		deleteSet.setOnAction((q) -> {
-			
-			if (Objects.equals(path[0], "")) {
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setContentText("no File selected");
-				alert.showAndWait();
-			} else {
+			stage.setMinHeight(220);
+			stage.setMinWidth(350);
+			stage.setTitle("CardSets");
+			pane.setCenter(hBox);
+			pane.setBottom(buttonBox);
+			stage.setScene(scene);
+			hBox.setSpacing(15);
+			hBox.setAlignment(Pos.CENTER);
+			buttonBox.setSpacing(2);
+			buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
+			add_new_set.setOnAction((q) -> {
+				try {
+					convertToCardSetWithDialog(100, 100, size);
+					newSet[0] = true;
+					stage.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});
+			confirm.setOnAction((q) -> {
 				
-				for (File file : Objects.requireNonNull(new File(path[0]).listFiles())) {
+				if (!Objects.equals(path[0], "")) {
+					stage.close();
+				} else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText("No Set selected");
+					alert.show();
+					System.err.println("No Set selected");
+				}
+				
+			});
+			abort.setOnAction((q) -> {
+				stage.close();
+				abortBoolean[0] = true;
+			});
+			deleteSet.setOnAction((q) -> {
+				
+				if (Objects.equals(path[0], "")) {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText("no File selected");
+					alert.showAndWait();
+				} else {
 					
-					if (!file.delete()) {
+					for (File file : Objects.requireNonNull(new File(path[0]).listFiles())) {
+						
+						if (!file.delete()) {
+							Alert alert = new Alert(Alert.AlertType.ERROR);
+							alert.setContentText("unable to delete File");
+							alert.showAndWait();
+						}
+						
+					}
+					
+					if (!new File(path[0]).delete()) {
 						Alert alert = new Alert(Alert.AlertType.ERROR);
-						alert.setContentText("unable to delete File");
+						alert.setContentText("unable to delete Directory");
 						alert.showAndWait();
 					}
 					
+					newSet[0] = true;
+					stage.close();
+					
 				}
 				
-				if (!new File(path[0]).delete()) {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-					alert.setContentText("unable to delete Directory");
+			});
+			
+			for (File file : Objects.requireNonNull(new File(pathtoSets).listFiles())) {
+				
+				if (Objects.requireNonNull(file.listFiles()).length < 9) {
+					
+					Alert alert = new Alert(Alert.AlertType.WARNING);
+					alert.setContentText("an invalid Set, named " + file.getName() + " consisting of only " + Objects.requireNonNull(file.listFiles()).length + " images has been found.\nthe minimum number of images required is 9. It will be deleted.");
+					alert.setWidth(alert.getWidth() + 400);
+					alert.setHeight(alert.getHeight() + 100);
+					alert.setResizable(true);
 					alert.showAndWait();
+					System.err.println("deleted directory " + file.getName());
+					
+					if (!file.delete()) {
+						
+						for (File image : Objects.requireNonNull(file.listFiles())) {
+							
+							if (!image.delete()) {
+								System.err.println("can not delete file");
+							}
+							
+						}
+						
+						if (!file.delete()) {
+							System.err.println("could not delete directory");
+						}
+						
+					}
+					
+					continue;
 				}
 				
-				newSet[0] = true;
-				stage.close();
-				
-			}
-			
-		});
-		
-		for (File file : Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles())) {
-			
-			if (Objects.requireNonNull(file.listFiles()).length < 9) {
-				
-				Alert alert = new Alert(Alert.AlertType.WARNING);
-				alert.setContentText("an invalid Set, named " + file.getName() + " consisting of only " + Objects.requireNonNull(file.listFiles()).length + " images has been found.\nthe minimum number of images required is 9. It will be deleted.");
-				alert.setWidth(alert.getWidth() + 400);
-				alert.setHeight(alert.getHeight() + 100);
-				alert.setResizable(true);
-				alert.showAndWait();
-				System.err.println("deleted directory " + file.getName());
-				
-				if (!file.delete()) {
+				if (!Objects.requireNonNull(file.listFiles())[0].getName().equals("0.jpg")) {
+					
+					int i = 0;
 					
 					for (File image : Objects.requireNonNull(file.listFiles())) {
 						
-						if (!image.delete()) {
-							System.err.println("can not delete file");
+						
+						if (!image.getName().equals("background.jpg")) {
+							
+							try {
+								Files.move(Path.of(image.toURI()), Path.of(image.getPath().replace(image.getName(), i + ".jpg")), StandardCopyOption.REPLACE_EXISTING);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							
 						}
+						
+						i++;
 						
 					}
 					
-					if (!file.delete()) {
-						System.err.println("could not delete directory");
+					
+				}
+				
+				if (Objects.requireNonNull(file.listFiles()).length >= Math.pow(size, 2) / 2 + 1) {
+					
+					ImageView imageView = new ImageView();
+					Button select = new Button("select " + file.getName());
+					VBox imageBox = new VBox(imageView, select);
+					buttons.add(select);
+					
+					imageBox.setSpacing(5);
+					imageBox.setAlignment(Pos.CENTER);
+					hBox.getChildren().add(imageBox);
+					try {
+						imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(), 100, 100, false, false));
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
 					}
 					
-				}
-				
-				continue;
-			}
-			
-			if (!Objects.requireNonNull(file.listFiles())[0].getName().equals("0.jpg")) {
-				
-				int i = 0;
-				
-				for (File image : Objects.requireNonNull(file.listFiles())) {
-					
-					
-					if (!image.getName().equals("background.jpg")) {
+					select.setOnAction((q) -> {
 						
-						try {
-							Files.move(Path.of(image.toURI()), Path.of(image.getPath().replace(image.getName(), i + ".jpg")), StandardCopyOption.REPLACE_EXISTING);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						
-					}
-					
-					i++;
-					
-				}
-				
-				
-			}
-			
-			if (Objects.requireNonNull(file.listFiles()).length >= Math.pow(size, 2) / 2 + 1) {
-				
-				ImageView imageView = new ImageView();
-				Button select = new Button("select " + file.getName());
-				VBox imageBox = new VBox(imageView, select);
-				buttons.add(select);
-				
-				imageBox.setSpacing(5);
-				imageBox.setAlignment(Pos.CENTER);
-				hBox.getChildren().add(imageBox);
-				try {
-					imageView.setImage(new Image(Objects.requireNonNull(file.listFiles())[0].toURI().toURL().toString(), 100, 100, false, false));
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
-				
-				select.setOnAction((q) -> {
-					
-					path[0] = file.getPath();
-					select.setTextFill(Color.GREEN);
-					buttons.forEach((b) -> {
-						
-						if (b != select) {
-							b.setTextFill(Color.BLACK);
-						}
+						path[0] = file.getPath();
+						select.setTextFill(Color.GREEN);
+						buttons.forEach((b) -> {
+							
+							if (b != select) {
+								b.setTextFill(Color.BLACK);
+							}
+							
+						});
 						
 					});
 					
-				});
+				}
 				
 			}
 			
-		}
-		
-		if (hBox.getChildren().size() == 0) {
-			
-			
-			if (Objects.requireNonNull(new File("src/main/resources/com/example/maemory/CardSets/").listFiles()).length == 0) {
+			if (hBox.getChildren().size() == 0) {
 				
-				hBox.getChildren().add(new Label("No card sets exist."));
+				
+				if (Objects.requireNonNull(new File(pathtoSets).listFiles()).length == 0) {
+					
+					hBox.getChildren().add(new Label("No card sets exist."));
+					
+				} else {
+					
+					hBox.getChildren().add(new Label("No card sets have enough cards to play with this size of playing field."));
+					
+				}
+				
+				
+			}
+			
+			stage.showAndWait();
+			
+			if (newSet[0]) {
+				
+				return showCardSetSelectionDialog(size);
+				
+			} else if (abortBoolean[0]) {
+				
+				return "abort";
 				
 			} else {
-				
-				hBox.getChildren().add(new Label("No card sets have enough cards to play with this size of playing field."));
-				
+				return path[0];
 			}
 			
+		} catch (NullPointerException e) {
+			
+			if (!new File(pathtoSets).exists()) {
+				if (!new File(pathtoSets).mkdir()) {
+					System.err.println("unable to create directory");
+				}
+			}
+			
+			return "abort";
 			
 		}
-		
-		stage.showAndWait();
-		
-		if (newSet[0]) {
-			
-			return showCardSetSelectionDialog(size);
-			
-		} else {
-			return path[0];
-		}
-		
 		
 	}
 	
