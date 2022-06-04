@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.maemory.multiplayer.JoinServer">
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="225.0" layoutY="42.0" text="Lischte mit erreichbora Serva" />
+            <TableView fx:id="tableView" layoutX="222.0" layoutY="94.0" prefHeight="242.0" prefWidth="147.0">
+              <columns>
+                  <TableColumn prefWidth="75.0" text="Name">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="name" />
+                      </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn prefWidth="75.0" text="Port">
+                      <cellValueFactory>
+                          <PropertyValueFactory property="port" />
+                      </cellValueFactory>
+                  </TableColumn>
+              </columns>
+            </TableView>
+            <Button layoutX="270.0" layoutY="360.0" mnemonicParsing="false" text="Search" fx:id="findSrv" onAction="#findServers"/>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>
