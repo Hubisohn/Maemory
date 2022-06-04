@@ -12,7 +12,7 @@
             prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../css/Gamefield.css">
     <left>
         <VBox styleClass="infos">
-            <Label styleClass="playerNames" text="Player"/>
+            <Label fx:id="player1name" styleClass="playerNames" text="Player"/>
             <Label styleClass="points"  fx:id="pointsPlayer" text="0"/>
         </VBox>
     </left>
@@ -21,8 +21,13 @@
     </center>
     <right>
         <VBox styleClass="infos">
-            <Label styleClass="playerNames" text="Computer"/>
+            <Label fx:id="player2name" styleClass="playerNames" text="Computer"/>
             <Label styleClass="points"  fx:id="pointsComputer" text="0"/>
         </VBox>
     </right>
+    <bottom>
+        <HBox styleClass="infos">
+            <Label styleClass="playerNames" fx:id="info" text=" "/>
+        </HBox>
+    </bottom>
 </BorderPane>

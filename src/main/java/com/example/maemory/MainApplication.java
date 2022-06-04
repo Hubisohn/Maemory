@@ -15,6 +15,15 @@ public class MainApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+        stage.setFullScreen(true);
+
+        //Aso wert is Spiel gstartn
+        //Ba start muss man die größe fan spielfeld (4, 6, odo 8) ingebm,
+        // ba do schwierigkeit a prozentwert(wenn 1vs1 noa konn man irgendepas ingebm sel isch noa gleich)
+        //und singlePlayer af true isch gegn Computer und false 1vs1
+        SinglePlayerController controller = fxmlLoader.getController();
+        controller.start(4, 25, false);
+
     }
 
     public static void main(String[] args) {

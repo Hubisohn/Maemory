@@ -1,6 +1,5 @@
 package com.example.maemory;
 
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -8,15 +7,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
@@ -30,6 +25,9 @@ public class SinglePlayerController implements Initializable {
     public Label pointsPlayer;
     public Label pointsComputer;
     public GridPane spielfeld;
+    public Label player1name;
+    public Label player2name;
+    public Label info;
     HashMap<Integer, Spielkarte> feld = new HashMap<>();
     ArrayList<Spielkarte> cardsOpened = new ArrayList<>();
     Image background = null;
@@ -37,6 +35,8 @@ public class SinglePlayerController implements Initializable {
     private int player = 0;
     private ArrayList<Spielkarte> knownCards = new ArrayList<>();
     private int level;
+    private boolean computer;
+
 
 
     //4x4 6x6 8x8
@@ -54,9 +54,8 @@ public class SinglePlayerController implements Initializable {
         points[1] = new SimpleIntegerProperty(0);
         pointsPlayer.textProperty().bind(points[0].asString());
         pointsComputer.textProperty().bind(points[1].asString());
-        start(6, 12.5);
         spielfeld.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            if (player == 0) {
+            if (player == 0 || (!computer && player == 1)) {
                 if (cardsOpened.size() < 2) {
                     ImageView imageView = (ImageView) mouseEvent.getTarget();
                     karteAufdecken(imageView);
@@ -77,17 +76,16 @@ public class SinglePlayerController implements Initializable {
 
     private void karteAufdecken(ImageView imageView) {
         Spielkarte x = (Spielkarte) feld.get(spielfeld.getChildren().indexOf(imageView));
-        //Test fehler
-        System.out.println(x.getIndex() + "  " + x.getVorderseiteID());
         imageView.setImage(x.getVorderseite());
         cardsOpened.add(x);
-        if (!knownCards.contains(x)) {
-            knownCards.add(x);
-            if(knownCards.size() > level){
-                knownCards.remove(0);
+        if(computer) {
+            if (!knownCards.contains(x)) {
+                knownCards.add(x);
+                if (knownCards.size() > level) {
+                    knownCards.remove(0);
+                }
             }
         }
-        System.out.println(knownCards);
     }
 
     public void autoPlay() {
@@ -129,7 +127,6 @@ public class SinglePlayerController implements Initializable {
 
 
     Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2.4), new EventHandler<ActionEvent>() {
-
         @Override
         public void handle(ActionEvent actionEvent) {
             if (cardsOpened.size() >= 2) {
@@ -146,8 +143,10 @@ public class SinglePlayerController implements Initializable {
             spielfeld.getChildren().get(cardsOpened.get(1).getIndex()).setVisible(false);
             feld.put(cardsOpened.get(0).getIndex(), null);
             feld.put(cardsOpened.get(1).getIndex(), null);
-            knownCards.remove(cardsOpened.get(0));
-            knownCards.remove(cardsOpened.get(1));
+            if (computer) {
+                knownCards.remove(cardsOpened.get(0));
+                knownCards.remove(cardsOpened.get(1));
+            }
             points[player].setValue(points[player].getValue() + 10);
             for (int i = 0; i < feld.size(); i++) {
                 if (feld.get(i) != null) {
@@ -159,9 +158,10 @@ public class SinglePlayerController implements Initializable {
                 }
             }
             if (player == 1) {
-
                 cardsOpened.clear();
-                autoPlay();
+                if (computer){
+                    autoPlay();
+                }
             }
         } else {
             ((ImageView) spielfeld.getChildren().get(cardsOpened.get(1).getIndex())).setImage(background);
@@ -169,44 +169,77 @@ public class SinglePlayerController implements Initializable {
             if (player== 0) {
                 player = 1;
                 cardsOpened.clear();
-                autoPlay();
+                if(computer) {
+                    info.setText("Computer ist am Zug");
+                    autoPlay();
+                }
+                else info.setText(player2name.getText() + " ist am Zug");
+
             } else {
                 player = 0;
+                info.setText(player1name.getText() + " ist am Zug");
             }
         }
         if(player == 0) cardsOpened.clear();
     }
 
     private void gameOver() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         box.setLeft(null);
         box.setRight(null);
         box.setCenter(null);
+        box.setBottom(null);
         Label label = new Label("");
         label.setStyle("-fx-font-size: 50px; -fx-text-fill: #ff0000;");
         if (points[0].getValue() > points[1].getValue()) {
-            label.setText("Spieler hat gewonnen!");
+            label.setText(player1name.getText() + " hat gewonnen!");
         } else if (points[0].getValue() < points[1].getValue()) {
-            label.setText("Computer hat gewonnen!");
+            label.setText(player1name.getText() + " hat gewonnen!");
         }
         else {
             label.setText("Unentschieden!");
         }
         box.setCenter(label);
+
+        //TODO: save score back to dashboard
+        //points[0].getValue() Spieler1
+        //points[1].getValue() Spieler2
+        //Punkte speichon ban eli und noa zruck zin menü
     }
 
 
 
-    void start(int size, double difficulty) {
-        level = (int) ((Math.pow(size,2) / 100) * difficulty);
-        System.out.println(level);
+    void start(int size, double difficulty, boolean singlePlayer) {
+        //Beginner Auslosen
+        this.computer = singlePlayer;
+        Random r = new Random();
+        player = r.nextInt(2);
+
+        //TODO: Name der Spieler angeben
+        player1name.setText("Spieler 1"); //Hier muss der Name der Spieler eingegeben werden
+        if(computer) player2name.setText("Computer");
+        else player2name.setText("Spieler 2"); //Hier muss der Name der Spieler eingegeben werden ause es spielt lai a spieler
+
+        if (player == 0) {
+            info.setText(player1name.getText() + " ist am Zug");
+        } else {
+            if(computer) info.setText("Computer ist am Zug");
+            else info.setText(player2name.getText() + " ist am Zug");
+        }
+
+        if(computer) level = (int) ((Math.pow(size,2) / 100) * difficulty);
+
         //Hintergrund
         try {
             background = new Image(new FileInputStream("src/main/resources/Images/Hintergrund.jpg"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
+        //Karten zufällig mischen
         int anz[] = new int[(int) Math.pow(size, 2) / 2];
         Random random = new Random();
         Arrays.fill(anz, 2);
@@ -232,6 +265,15 @@ public class SinglePlayerController implements Initializable {
             }
         }
         box.setCenter(spielfeld);
+
+        if (computer && player == 1) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            autoPlay();
+        }
     }
 
 }
